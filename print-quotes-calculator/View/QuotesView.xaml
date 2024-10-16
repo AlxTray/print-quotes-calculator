@@ -14,7 +14,10 @@
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Material}" Width="110" />
+                                <ComboBox ItemsSource="{Binding DataContext.MaterialTypes, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                          SelectedValue="{Binding Material}"
+                                          Width="110"
+                                          Height="18"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -38,7 +41,10 @@
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Ink}" Width="110" />
+                                <ComboBox ItemsSource="{Binding DataContext.InkTypes, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                          SelectedValue="{Binding Ink}"
+                                          Width="110"
+                                          Height="18"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

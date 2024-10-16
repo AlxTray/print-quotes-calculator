@@ -23,6 +23,18 @@ namespace print_quotes_calculator.ViewModel
             _container = container;
             _quoteRows = [];
             AddCommand = new RelayCommand(AddQuoteRow);
+
+            _materialTypes = [
+                "A",
+                "B",
+                "C"
+            ];
+
+            _inkTypes = [
+                "D",
+                "E",
+                "F"
+            ];
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -32,6 +44,26 @@ namespace print_quotes_calculator.ViewModel
             {
                 _quoteRows = value;
                 RaisePropertyChanged(nameof(QuoteRows));
+            }
+        }
+
+        public ObservableCollection<string> MaterialTypes
+        {
+            get => _materialTypes;
+            set
+            {
+                _materialTypes = value;
+                RaisePropertyChanged(nameof(MaterialTypes));
+            }
+        }
+
+        public ObservableCollection<string> InkTypes
+        {
+            get => _inkTypes;
+            set
+            {
+                _inkTypes = value;
+                RaisePropertyChanged(nameof(MaterialTypes));
             }
         }
 
