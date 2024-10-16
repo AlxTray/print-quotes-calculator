@@ -15,6 +15,8 @@ namespace print_quotes_calculator.ViewModel
     {
         private UnityContainer _container;
         private ObservableCollection<QuoteRow> _quoteRows;
+        private ObservableCollection<string> _materialTypes;
+        private ObservableCollection<string> _inkTypes;
 
         public QuotesViewModel(UnityContainer container)
         {
