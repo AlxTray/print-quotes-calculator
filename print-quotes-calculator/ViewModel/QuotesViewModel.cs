@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using Unity;
 
 namespace print_quotes_calculator.ViewModel
 {
-    internal class QuotesViewModel : IQuotesViewModel
+    internal class QuotesViewModel : IQuotesViewModel, INotifyPropertyChanged
     {
         private UnityContainer _container;
         private ObservableCollection<QuoteRow> _quoteRows;
@@ -19,14 +20,31 @@ namespace print_quotes_calculator.ViewModel
         {
             _container = container;
             _quoteRows = [];
-            AddCommand = new RelayCommand(AddNewQuoteRow);
+            AddCommand = new RelayCommand(AddQuoteRow);
+        }
+
+        public ObservableCollection<QuoteRow> QuoteRows
+        {
+            get => _quoteRows;
+            set
+            {
+                _quoteRows = value;
+                RaisePropertyChanged(nameof(QuoteRows));
+            }
         }
 
         public ICommand AddCommand { get; }
 
-        public void addQuoteRow()
+        public void AddQuoteRow()
         {
             _quoteRows.Add(_container.Resolve<QuoteRow>());
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

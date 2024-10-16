@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace print_quotes_calculator.ViewModel
 {
-    class QuoteRow : IQuoteRow
+    class QuoteRow : IQuoteRow, INotifyPropertyChanged
     {
         private string _material;
         private double _materialUsage;
@@ -68,10 +68,15 @@ namespace print_quotes_calculator.ViewModel
         public double QuoteCost 
         { 
             get => _quoteCost;
+            set
+            {
+                _quoteCost = value;
+                RaisePropertyChanged(nameof(QuoteCost));
+            }
         }
         private void CalculateQuoteCost()
         {
-            // Calculate the quote cost
+            QuoteCost = _materialUsage + _inkUsage;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

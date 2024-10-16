@@ -9,25 +9,66 @@
     <Grid>
         <WrapPanel Margin="0,35,0,0">
             <StackPanel Width="110">
-                <Label Content="Material Type"/>
+                <TextBlock Text="Material Type"/>
+                <ItemsControl ItemsSource="{Binding QuoteRows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Material}" Width="100" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
             <StackPanel Width="110">
-                <Label Content="Material Usage"/>
+                <TextBlock Text="Material Usage"/>
+                <ItemsControl ItemsSource="{Binding QuoteRows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding MaterialUsage}" Width="100" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
             <StackPanel Width="110">
-                <Label Content="Ink Type"/>
+                <TextBlock Text="Ink Type"/>
+                <ItemsControl ItemsSource="{Binding QuoteRows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Ink}" Width="100" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
             <StackPanel Width="110">
-                <Label Content="Ink Usage"/>
+                <TextBlock Text="Ink Usage"/>
+                <ItemsControl ItemsSource="{Binding QuoteRows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding InkUsage}" Width="100" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
             <StackPanel Width="230">
-                <Label Content="Description"/>
+                <TextBlock Text="Description"/>
+                <ItemsControl ItemsSource="{Binding QuoteRows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Description}" Width="100" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
             <StackPanel Width="110">
-                <Label Content="Cost"/>
+                <TextBlock Text="Cost"/>
+                <ItemsControl ItemsSource="{Binding QuoteRows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding QuoteCost}" Width="100" IsReadOnly="True" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </WrapPanel>
-        <ToolBar HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="800"/>
-
+        <Button Content="Add Row" Command="{Binding AddCommand}"  HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="800"/>
     </Grid>
 </UserControl>
