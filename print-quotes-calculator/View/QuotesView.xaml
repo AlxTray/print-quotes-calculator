@@ -16,8 +16,7 @@
                             <DataTemplate>
                                 <ComboBox ItemsSource="{Binding DataContext.MaterialTypes, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                           SelectedValue="{Binding Material}"
-                                          Width="110"
-                                          Height="18"/>
+                                          Width="110"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -29,7 +28,7 @@
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding MaterialUsage}" Width="110" />
+                                <TextBox Text="{Binding MaterialUsage}" Width="110" Height="22"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -43,8 +42,7 @@
                             <DataTemplate>
                                 <ComboBox ItemsSource="{Binding DataContext.InkTypes, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                           SelectedValue="{Binding Ink}"
-                                          Width="110"
-                                          Height="18"/>
+                                          Width="110"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -56,7 +54,7 @@
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding InkUsage}" Width="110" />
+                                <TextBox Text="{Binding InkUsage}" Width="110" Height="22"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -68,7 +66,7 @@
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Description}" Width="204" />
+                                <TextBox Text="{Binding Description}" Width="204" Height="22"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -81,7 +79,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="Gray" BorderThickness="1" Background="White">
-                                    <TextBlock Text="{Binding Path=QuoteCost, StringFormat='£{0}'}" Background="LightGray" Width="110" />
+                                    <TextBlock Text="{Binding Path=QuoteCost, StringFormat='£{0}'}" Background="LightGray" Width="110" Height="20"/>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
