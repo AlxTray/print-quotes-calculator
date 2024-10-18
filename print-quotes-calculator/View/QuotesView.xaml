@@ -28,7 +28,7 @@
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding MaterialUsage}" Width="110" Height="22"/>
+                                <TextBox Text="{Binding MaterialUsage, UpdateSourceTrigger=PropertyChanged}" Width="110" Height="22"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -54,7 +54,7 @@
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding InkUsage}" Width="110" Height="22"/>
+                                <TextBox Text="{Binding InkUsage, UpdateSourceTrigger=PropertyChanged}" Width="110" Height="22"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
