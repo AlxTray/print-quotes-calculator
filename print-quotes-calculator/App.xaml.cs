@@ -1,6 +1,4 @@
 ﻿using print_quotes_calculator.ViewModel;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 using Unity;
 
