@@ -144,7 +144,6 @@ namespace print_quotes_calculator.ViewModel
                 Description = quoteRow.Description,
                 QuoteCost = quoteRow.QuoteCost
             };
-            System.Diagnostics.Debug.WriteLine($"QuoteRow_PropertyChanged: {quote.QuoteId}");
             var existingQuote = db.Rows.Find(quote.QuoteId);
             if (existingQuote == null) db.Rows.Add(quote);
             else db.Entry(existingQuote).CurrentValues.SetValues(quote);
