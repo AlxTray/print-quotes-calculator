@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 using print_quotes_calculator.Model;
 using print_quotes_calculator.Utilities;
 using Unity;
@@ -26,6 +27,7 @@ namespace print_quotes_calculator.ViewModel
             AddCommand = new RelayCommand(AddQuoteRow);
 
             var db = _container.Resolve<QuoteContext>();
+            db.Database.Migrate();
             _materials = db.Materials.ToDictionary(material => material.Name, material => material.Cost);
             _inks = db.Inks.ToDictionary(ink => ink.Name, ink => ink.Cost);
         }
