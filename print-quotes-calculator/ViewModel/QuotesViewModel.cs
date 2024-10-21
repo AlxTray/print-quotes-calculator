@@ -25,23 +25,9 @@ namespace print_quotes_calculator.ViewModel
 
             AddCommand = new RelayCommand(AddQuoteRow);
 
-            var databaseHelper = _container.Resolve<DatabaseHelper>();
-            _materials = databaseHelper.GetMaterials();
-            _inks = databaseHelper.GetInks();
-
-            // Testing
-            _materials = new Dictionary<string, decimal>
-            {
-                { "Material 1", 1.0m },
-                { "Material 2", 2.0m },
-                { "Material 3", 3.0m }
-            };
-            _inks = new Dictionary<string, decimal>
-            {
-                { "Ink 1", 1.0m },
-                { "Ink 2", 2.0m },
-                { "Ink 3", 3.0m }
-            };
+            var db = _container.Resolve<QuoteContext>();
+            _materials = db.Materials.ToDictionary(material => material.Name, material => material.Cost);
+            _inks = db.Inks.ToDictionary(ink => ink.Name, ink => ink.Cost);
         }
 
         public ObservableCollection<QuoteRow> QuoteRows

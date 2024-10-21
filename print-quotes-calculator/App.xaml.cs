@@ -14,7 +14,7 @@ namespace print_quotes_calculator
             base.OnStartup(e);
 
             var container = new UnityContainer();
-            container.RegisterType<IDatabaseHelper, DatabaseHelper>();
+            container.RegisterType<IQuoteContext, QuoteContext>();
             container.RegisterType<IQuoteCalculator, QuoteCalculator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IQuotesViewModel, QuotesViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IQuoteRow, QuoteRow>();
