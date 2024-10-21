@@ -7,9 +7,30 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ScrollViewer Margin="0,35,0,0">
+        <Menu Background="Gainsboro">
+            <MenuItem Header="File">
+                <MenuItem Header="New"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Export to CSV"/>
+                <Separator/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Cut"/>
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+                <Separator/>
+                <MenuItem Header="Add Quote" Command="{Binding AddCommand}"/>
+                <MenuItem Header="Settings..."/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"/>
+            </MenuItem>
+        </Menu>
+        <ScrollViewer Margin="0,35,0,0" Background="GhostWhite">
             <WrapPanel>
                 <StackPanel Width="110">
+                    <Border BorderBrush="Black" BorderThickness="1"/>
                     <TextBlock Background="DimGray" Text="Material Type"/>
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
@@ -24,6 +45,7 @@
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="1"/>
                 <StackPanel Width="110">
+                    <Border BorderBrush="Black" BorderThickness="1"/>
                     <TextBlock Background="DimGray" Text="Material Usage (m²)"/>
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
@@ -36,6 +58,7 @@
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="1"/>
                 <StackPanel Width="110">
+                    <Border BorderBrush="Black" BorderThickness="1"/>
                     <TextBlock Background="DimGray" Text="Ink Type"/>
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
@@ -50,6 +73,7 @@
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="1"/>
                 <StackPanel Width="110">
+                    <Border BorderBrush="Black" BorderThickness="1"/>
                     <TextBlock Background="DimGray" Text="Ink Usage (m²)"/>
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
@@ -62,6 +86,7 @@
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="1"/>
                 <StackPanel Width="204">
+                    <Border BorderBrush="Black" BorderThickness="1"/>
                     <TextBlock Background="DimGray" Text="Description"/>
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
@@ -74,6 +99,7 @@
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="1"/>
                 <StackPanel Width="110">
+                    <Border BorderBrush="Black" BorderThickness="1"/>
                     <TextBlock Background="DimGray" Text="Cost"/>
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
@@ -88,6 +114,5 @@
                 </StackPanel>
             </WrapPanel>
         </ScrollViewer>
-        <Button Content="Add Row" Command="{Binding AddCommand}"  HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="800"/>
     </Grid>
 </UserControl>
