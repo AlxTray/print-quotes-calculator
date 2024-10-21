@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:print_quotes_calculator.View"
         mc:Ignorable="d"
-        Title="Print Quotes Calculator" Height="450" Width="800">
+        Title="Print Quotes Calculator" Height="450" Width="800"
+        ResizeMode="CanMinimize">
     <Grid>
         <local:QuotesView x:Name="quotesView" />
     </Grid>
