@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace print_quotes_calculator.ViewModel
 {
-    interface IQuoteRow
+    internal interface IQuoteRow
     {
+        string Material { get; set; }
+        double MaterialUsage { get; set; }
+        string Ink { get; set; }
+        double InkUsage { get; set; }
+        string Description { get; set; }
+        double QuoteCost { get; set; }
+        void CalculateQuoteCost();
+    }
     }
 }

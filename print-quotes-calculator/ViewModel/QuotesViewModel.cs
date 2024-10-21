@@ -8,7 +8,7 @@ namespace print_quotes_calculator.ViewModel
 {
     internal class QuotesViewModel : IQuotesViewModel, INotifyPropertyChanged
     {
-        private UnityContainer _container;
+        private readonly UnityContainer _container;
         private ObservableCollection<QuoteRow> _quoteRows;
         private ObservableCollection<string> _materialTypes;
         private ObservableCollection<string> _inkTypes;
@@ -69,7 +69,7 @@ namespace print_quotes_calculator.ViewModel
             _quoteRows.Add(_container.Resolve<QuoteRow>());
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void RaisePropertyChanged(string propertyName)
         {
