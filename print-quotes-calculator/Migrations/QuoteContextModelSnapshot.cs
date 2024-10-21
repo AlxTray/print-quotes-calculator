@@ -18,36 +18,26 @@ namespace print_quotes_calculator.Migrations
 
             modelBuilder.Entity("print_quotes_calculator.Utilities.Ink", b =>
                 {
-                    b.Property<long>("InkId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("InkId");
+                    b.HasKey("Name");
 
                     b.ToTable("Inks");
                 });
 
             modelBuilder.Entity("print_quotes_calculator.Utilities.Material", b =>
                 {
-                    b.Property<long>("MaterialId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("MaterialId");
+                    b.HasKey("Name");
 
                     b.ToTable("Materials");
                 });

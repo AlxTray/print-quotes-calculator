@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using print_quotes_calculator.Model;
 using print_quotes_calculator.Utilities;
 using Unity;
+using Unity.Resolution;
 
 namespace print_quotes_calculator.ViewModel
 {
@@ -20,16 +21,23 @@ namespace print_quotes_calculator.ViewModel
         public QuotesViewModel(UnityContainer container)
         {
             _container = container;
-
-            _quoteRows = [];
-            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
-
             AddCommand = new RelayCommand(AddQuoteRow);
 
             var db = _container.Resolve<QuoteContext>();
             db.Database.Migrate();
             _materials = db.Materials.ToDictionary(material => material.Name, material => material.Cost);
             _inks = db.Inks.ToDictionary(ink => ink.Name, ink => ink.Cost);
+
+            _quoteRows = new ObservableCollection<QuoteRow>(db.Rows.Select(quote => new QuoteRow(quote.QuoteId)
+            {
+                Material = quote.Material,
+                MaterialUsage = quote.MaterialUsage,
+                Ink = quote.Ink,
+                InkUsage = quote.InkUsage,
+                Description = quote.Description,
+                QuoteCost = quote.QuoteCost
+            }));
+            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -71,7 +79,12 @@ namespace print_quotes_calculator.ViewModel
 
         public void AddQuoteRow()
         {
-            _quoteRows.Add(_container.Resolve<QuoteRow>());
+            long quoteId = 1;
+            if (_quoteRows.Count > 0)
+            {
+                quoteId = _quoteRows.Last().Id + 1;
+            }
+            _quoteRows.Add(_container.Resolve<QuoteRow>(new ParameterOverride("id", quoteId)));
         }
 
 
@@ -114,6 +127,23 @@ namespace print_quotes_calculator.ViewModel
             }
             quoteRow.QuoteCost = _container.Resolve<QuoteCalculator>()
                 .CalculateQuote(quoteRow.MaterialUsage, materialCost, quoteRow.InkUsage, inkCost);
+
+            var db = _container.Resolve<QuoteContext>();
+            var quote = new Quote()
+            {
+                QuoteId = quoteRow.Id,
+                Material = quoteRow.Material,
+                MaterialUsage = quoteRow.MaterialUsage,
+                Ink = quoteRow.Ink,
+                InkUsage = quoteRow.InkUsage,
+                Description = quoteRow.Description,
+                QuoteCost = quoteRow.QuoteCost
+            };
+            System.Diagnostics.Debug.WriteLine($"QuoteRow_PropertyChanged: {quote.QuoteId}");
+            var existingQuote = db.Rows.Find(quote.QuoteId);
+            if (existingQuote == null) db.Rows.Add(quote);
+            else db.Entry(existingQuote).CurrentValues.SetValues(quote);
+            db.SaveChanges();
         }
 
 

@@ -2,7 +2,7 @@
 
 namespace print_quotes_calculator.Utilities
 {
-    internal class QuoteRow : IQuoteRow, INotifyPropertyChanged
+    internal class QuoteRow(long id) : IQuoteRow, INotifyPropertyChanged
     {
         private string _material = string.Empty;
         private decimal _materialUsage;
@@ -10,6 +10,8 @@ namespace print_quotes_calculator.Utilities
         private decimal _inkUsage;
         private string _description = string.Empty;
         private decimal _quoteCost = 0.00m;
+
+        public long Id { get; set; } = id;
 
         public string Material
         {

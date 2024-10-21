@@ -21,7 +21,6 @@ namespace print_quotes_calculator.Utilities
     internal class Material
     {
         [Key]
-        public long MaterialId { get; set; }
         public string Name { get; set; }
         public decimal Cost { get; set; }
     }
@@ -30,7 +29,6 @@ namespace print_quotes_calculator.Utilities
     internal class Ink
     {
         [Key]
-        public long InkId { get; set; }
         public string Name { get; set; }
         public decimal Cost { get; set; }
     }
