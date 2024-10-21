@@ -28,7 +28,7 @@ namespace print_quotes_calculator.ViewModel
             _materials = db.Materials.ToDictionary(material => material.Name, material => material.Cost);
             _inks = db.Inks.ToDictionary(ink => ink.Name, ink => ink.Cost);
 
-            _quoteRows = new ObservableCollection<QuoteRow>(db.Rows.Select(quote => new QuoteRow(quote.QuoteId)
+            var rows = db.Rows.Select(quote => new QuoteRow(quote.QuoteId)
             {
                 Material = quote.Material,
                 MaterialUsage = quote.MaterialUsage,
@@ -36,8 +36,13 @@ namespace print_quotes_calculator.ViewModel
                 InkUsage = quote.InkUsage,
                 Description = quote.Description,
                 QuoteCost = quote.QuoteCost
-            }));
+            });
+            _quoteRows = [];
             _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
+            foreach (var row in rows)
+            {
+                _quoteRows.Add(row);
+            }
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
