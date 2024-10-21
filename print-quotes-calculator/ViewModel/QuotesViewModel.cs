@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
@@ -18,7 +19,10 @@ namespace print_quotes_calculator.ViewModel
         public QuotesViewModel(UnityContainer container)
         {
             _container = container;
+
             _quoteRows = [];
+            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
+
             AddCommand = new RelayCommand(AddQuoteRow);
 
             var databaseHelper = _container.Resolve<DatabaseHelper>();
@@ -74,12 +78,56 @@ namespace print_quotes_calculator.ViewModel
 
         public IEnumerable<string> InkTypesKeys => InkTypes.Keys;
 
+
         public ICommand AddCommand { get; }
 
         public void AddQuoteRow()
         {
             _quoteRows.Add(_container.Resolve<QuoteRow>());
         }
+
+
+        private void QuoteRow_CollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
+        {
+            if (eventArgs.NewItems != null)
+            {
+                foreach (QuoteRow quoteRow in eventArgs.NewItems)
+                {
+                    quoteRow.PropertyChanged += QuoteRow_PropertyChanged;
+                }
+            }
+
+            if (eventArgs.OldItems != null)
+            {
+                foreach (QuoteRow quoteRow in eventArgs.OldItems)
+                {
+                    quoteRow.PropertyChanged -= QuoteRow_PropertyChanged;
+                }
+            }
+        }
+
+        public void QuoteRow_PropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
+        {
+            if (sender is not QuoteRow quoteRow) return;
+            // Will have infinite recursion if QuoteCost is set here, which causes a PropertyChanged event
+            if (eventArgs.PropertyName is "QuoteCost") return;
+
+            decimal materialCost;
+            decimal inkCost;
+            try
+            {
+                materialCost = MaterialTypes[quoteRow.Material];
+                inkCost = InkTypes[quoteRow.Ink];
+            }
+            catch (KeyNotFoundException e)
+            {
+                quoteRow.QuoteCost = 0.00m;
+                return;
+            }
+            quoteRow.QuoteCost = _container.Resolve<QuoteCalculator>()
+                .CalculateQuote(quoteRow.MaterialUsage, materialCost, quoteRow.InkUsage, inkCost);
+        }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

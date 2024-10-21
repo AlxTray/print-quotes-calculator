@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace print_quotes_calculator.ViewModel
+namespace print_quotes_calculator.Utilities
 {
     internal interface IQuoteRow
     {
@@ -14,6 +14,5 @@ namespace print_quotes_calculator.ViewModel
         decimal InkUsage { get; set; }
         string Description { get; set; }
         decimal QuoteCost { get; set; }
-        void CalculateQuoteCost();
     }
 }
