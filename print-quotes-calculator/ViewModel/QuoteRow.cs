@@ -1,15 +1,17 @@
 ﻿using System.ComponentModel;
+using print_quotes_calculator.Model;
+using Unity;
 
 namespace print_quotes_calculator.ViewModel
 {
-    internal class QuoteRow : IQuoteRow, INotifyPropertyChanged
+    internal class QuoteRow(UnityContainer container) : IQuoteRow, INotifyPropertyChanged
     {
         private string _material = string.Empty;
-        private double _materialUsage;
+        private decimal _materialUsage;
         private string _ink = string.Empty;
-        private double _inkUsage;
+        private decimal _inkUsage;
         private string _description = string.Empty;
-        private double _quoteCost;
+        private decimal _quoteCost = 0.00m;
 
         public string Material
         {
@@ -21,7 +23,7 @@ namespace print_quotes_calculator.ViewModel
                 RaisePropertyChanged(nameof(Material));
             }
         }
-        public double MaterialUsage
+        public decimal MaterialUsage
         {
             get => _materialUsage;
             set
@@ -41,7 +43,7 @@ namespace print_quotes_calculator.ViewModel
                 RaisePropertyChanged(nameof(Ink));
             }
         }
-        public double InkUsage
+        public decimal InkUsage
         {
             get => _inkUsage;
             set
@@ -60,7 +62,7 @@ namespace print_quotes_calculator.ViewModel
                 RaisePropertyChanged(nameof(Description));
             }
         }
-        public double QuoteCost
+        public decimal QuoteCost
         {
             get => _quoteCost;
             set
@@ -71,7 +73,20 @@ namespace print_quotes_calculator.ViewModel
         }
         public void CalculateQuoteCost()
         {
-            QuoteCost = _materialUsage + _inkUsage;
+            var quoteViewModel = container.Resolve<QuotesViewModel>();
+            decimal materialCost;
+            decimal inkCost;
+            try
+            {
+                materialCost = quoteViewModel.MaterialTypes[Material];
+                inkCost = quoteViewModel.InkTypes[Ink];
+            }
+            catch (KeyNotFoundException e)
+            {
+                QuoteCost = 0.00m;
+                return;
+            }
+            QuoteCost = container.Resolve<QuoteCalculator>().CalculateQuote(MaterialUsage, materialCost, InkUsage, inkCost);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

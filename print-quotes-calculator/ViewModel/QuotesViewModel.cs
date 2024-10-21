@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using print_quotes_calculator.Model;
+using print_quotes_calculator.Utilities;
 using Unity;
 
 namespace print_quotes_calculator.ViewModel
@@ -10,8 +12,8 @@ namespace print_quotes_calculator.ViewModel
     {
         private readonly UnityContainer _container;
         private ObservableCollection<QuoteRow> _quoteRows;
-        private ObservableCollection<string> _materialTypes;
-        private ObservableCollection<string> _inkTypes;
+        private Dictionary<string, decimal> _materials;
+        private Dictionary<string, decimal> _inks;
 
         public QuotesViewModel(UnityContainer container)
         {
@@ -19,17 +21,23 @@ namespace print_quotes_calculator.ViewModel
             _quoteRows = [];
             AddCommand = new RelayCommand(AddQuoteRow);
 
-            _materialTypes = [
-                "A",
-                "B",
-                "C"
-            ];
+            var databaseHelper = _container.Resolve<DatabaseHelper>();
+            _materials = databaseHelper.GetMaterials();
+            _inks = databaseHelper.GetInks();
 
-            _inkTypes = [
-                "D",
-                "E",
-                "F"
-            ];
+            // Testing
+            _materials = new Dictionary<string, decimal>
+            {
+                { "Material 1", 1.0m },
+                { "Material 2", 2.0m },
+                { "Material 3", 3.0m }
+            };
+            _inks = new Dictionary<string, decimal>
+            {
+                { "Ink 1", 1.0m },
+                { "Ink 2", 2.0m },
+                { "Ink 3", 3.0m }
+            };
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -42,25 +50,29 @@ namespace print_quotes_calculator.ViewModel
             }
         }
 
-        public ObservableCollection<string> MaterialTypes
+        public Dictionary<string, decimal> MaterialTypes
         {
-            get => _materialTypes;
+            get => _materials;
             set
             {
-                _materialTypes = value;
+                _materials = value;
                 RaisePropertyChanged(nameof(MaterialTypes));
             }
         }
 
-        public ObservableCollection<string> InkTypes
+        public IEnumerable<string> MaterialTypesKeys => MaterialTypes.Keys;
+
+        public Dictionary<string, decimal> InkTypes
         {
-            get => _inkTypes;
+            get => _inks;
             set
             {
-                _inkTypes = value;
+                _inks = value;
                 RaisePropertyChanged(nameof(MaterialTypes));
             }
         }
+
+        public IEnumerable<string> InkTypesKeys => InkTypes.Keys;
 
         public ICommand AddCommand { get; }
 

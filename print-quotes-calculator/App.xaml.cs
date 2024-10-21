@@ -1,6 +1,9 @@
 ﻿using print_quotes_calculator.ViewModel;
 using System.Windows;
+using print_quotes_calculator.Model;
+using print_quotes_calculator.Utilities;
 using Unity;
+using Unity.Lifetime;
 
 namespace print_quotes_calculator
 {
@@ -11,7 +14,10 @@ namespace print_quotes_calculator
             base.OnStartup(e);
 
             var container = new UnityContainer();
-            container.RegisterType<QuotesViewModel>();
+            container.RegisterType<IDatabaseHelper, DatabaseHelper>();
+            container.RegisterType<IQuoteCalculator, QuoteCalculator>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IQuotesViewModel, QuotesViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IQuoteRow, QuoteRow>();
             container.RegisterType<MainWindow>();
 
             var mainWindow = container.Resolve<MainWindow>();
