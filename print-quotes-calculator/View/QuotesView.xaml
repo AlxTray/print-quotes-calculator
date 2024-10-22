@@ -22,7 +22,7 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <ScrollViewer Margin="0,25,0,0" Background="Gainsboro">
+        <ScrollViewer Margin="0,25,0,19" Background="Gainsboro">
             <WrapPanel>
                 <StackPanel Width="110">
                     <Border BorderBrush="Black" BorderThickness="1"/>
@@ -109,5 +109,14 @@
                 </StackPanel>
             </WrapPanel>
         </ScrollViewer>
+        <StatusBar VerticalAlignment="Bottom" Height="19" Background="DarkGray" FontSize="11">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Path=QuoteRows.Count, StringFormat='{}{0} Quotes'}"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Path=TotalQuotesCost, StringFormat='Total Cost: £{0}'}"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </UserControl>

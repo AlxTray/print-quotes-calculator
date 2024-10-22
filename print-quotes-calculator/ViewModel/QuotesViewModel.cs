@@ -17,6 +17,7 @@ namespace print_quotes_calculator.ViewModel
         private ObservableCollection<QuoteRow> _quoteRows;
         private Dictionary<string, decimal> _materials;
         private Dictionary<string, decimal> _inks;
+        private decimal _totalQuotesCost;
 
         public QuotesViewModel(UnityContainer container)
         {
@@ -43,6 +44,8 @@ namespace print_quotes_calculator.ViewModel
             {
                 _quoteRows.Add(row);
             }
+            
+            CalculateTotalCost();
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -79,6 +82,16 @@ namespace print_quotes_calculator.ViewModel
 
         public IEnumerable<string> InkTypesKeys => InkTypes.Keys;
 
+        public decimal TotalQuotesCost
+        {
+            get => _totalQuotesCost;
+            set
+            {
+                _totalQuotesCost = value;
+                RaisePropertyChanged(nameof(TotalQuotesCost));
+            }
+        }
+
 
         public ICommand AddCommand { get; }
 
@@ -90,6 +103,12 @@ namespace print_quotes_calculator.ViewModel
                 quoteId = _quoteRows.Last().Id + 1;
             }
             _quoteRows.Add(_container.Resolve<QuoteRow>(new ParameterOverride("id", quoteId)));
+        }
+
+
+        private void CalculateTotalCost()
+        {
+            TotalQuotesCost = _quoteRows.Sum(row => row.QuoteCost);
         }
 
 
@@ -132,6 +151,7 @@ namespace print_quotes_calculator.ViewModel
             }
             quoteRow.QuoteCost = _container.Resolve<QuoteCalculator>()
                 .CalculateQuote(quoteRow.MaterialUsage, materialCost, quoteRow.InkUsage, inkCost);
+            CalculateTotalCost();
 
             var db = _container.Resolve<QuoteContext>();
             var quote = new Quote()
