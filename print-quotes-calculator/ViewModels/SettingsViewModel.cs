@@ -1,5 +1,8 @@
 ﻿
 using System.ComponentModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using print_quotes_calculator.Models;
 using Unity;
 
 namespace print_quotes_calculator.ViewModels
@@ -17,8 +20,14 @@ namespace print_quotes_calculator.ViewModels
         public SettingsViewModel(UnityContainer container)
         {
             _container = container;
-            _materials = new Dictionary<string, decimal>();
-            _inks = new Dictionary<string, decimal>();
+            var db = _container.Resolve<DatabaseHelper>();
+            _materials = db.GetMaterials();
+            _inks = db.GetInks();
+
+            AddMaterialCommand = new RelayCommand(AddMaterial);
+            AddInkCommand = new RelayCommand(AddInk);
+            RemoveMaterialCommand = new RelayCommand(RemoveMaterial);
+            RemoveInkCommand = new RelayCommand(RemoveInk);
         }
 
         public string MaterialName
@@ -80,6 +89,44 @@ namespace print_quotes_calculator.ViewModels
                 RaisePropertyChanged(nameof(Inks));
             }
         }
+
+
+        public ICommand AddMaterialCommand { get; }
+
+        public void AddMaterial()
+        {
+            var db = _container.Resolve<DatabaseHelper>();
+            db.AddMaterial(MaterialName, MaterialCost);
+            Materials = db.GetMaterials();
+        }
+
+        public ICommand AddInkCommand { get; }
+
+        public void AddInk()
+        {
+            var db = _container.Resolve<DatabaseHelper>();
+            db.AddInk(InkName, InkCost);
+            Inks = db.GetInks();
+        }
+
+        public ICommand RemoveMaterialCommand { get; }
+
+        public void RemoveMaterial()
+        {
+            var db = _container.Resolve<DatabaseHelper>();
+            db.RemoveMaterial(MaterialName);
+            Materials = db.GetMaterials();
+        }
+
+        public ICommand RemoveInkCommand { get; }
+
+        public void RemoveInk()
+        {
+            var db = _container.Resolve<DatabaseHelper>();
+            db.RemoveInk(InkName);
+            Inks = db.GetInks();
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

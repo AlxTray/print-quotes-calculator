@@ -5,6 +5,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using print_quotes_calculator.Model;
+using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
 using Unity;
 using Unity.Resolution;
@@ -24,27 +25,14 @@ namespace print_quotes_calculator.ViewModel
             _container = container;
             AddCommand = new RelayCommand(AddQuoteRow);
 
-            var db = _container.Resolve<QuoteContext>();
-            db.Database.Migrate();
-            _materials = db.Materials.ToDictionary(material => material.Name, material => material.Cost);
-            _inks = db.Inks.ToDictionary(ink => ink.Name, ink => ink.Cost);
+            var db = _container.Resolve<DatabaseHelper>();
+            _materials = db.GetMaterials();
+            _inks = db.GetInks();
 
-            var rows = db.Rows.Select(quote => new QuoteRow(quote.QuoteId)
-            {
-                Material = quote.Material,
-                MaterialUsage = quote.MaterialUsage,
-                Ink = quote.Ink,
-                InkUsage = quote.InkUsage,
-                Description = quote.Description,
-                QuoteCost = quote.QuoteCost
-            });
-            _quoteRows = [];
-            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
-            foreach (var row in rows)
+            foreach (QuoteRow row in db.GetQuoteRows())
             {
                 _quoteRows.Add(row);
             }
-            
             CalculateTotalCost();
         }
 
@@ -149,21 +137,8 @@ namespace print_quotes_calculator.ViewModel
                 .CalculateQuote(quoteRow.MaterialUsage, materialCost, quoteRow.InkUsage, inkCost);
             CalculateTotalCost();
 
-            var db = _container.Resolve<QuoteContext>();
-            var quote = new Quote()
-            {
-                QuoteId = quoteRow.Id,
-                Material = quoteRow.Material,
-                MaterialUsage = quoteRow.MaterialUsage,
-                Ink = quoteRow.Ink,
-                InkUsage = quoteRow.InkUsage,
-                Description = quoteRow.Description,
-                QuoteCost = quoteRow.QuoteCost
-            };
-            var existingQuote = db.Rows.Find(quote.QuoteId);
-            if (existingQuote == null) db.Rows.Add(quote);
-            else db.Entry(existingQuote).CurrentValues.SetValues(quote);
-            db.SaveChanges();
+            var db = _container.Resolve<DatabaseHelper>();
+            db.AddOrUpdateQuoteRow(quoteRow);
         }
 
 
