@@ -16,7 +16,7 @@
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Add Quote" Command="{Binding AddCommand}"/>
-                <MenuItem Header="Settings..."/>
+                <MenuItem Header="Settings..." Command="{Binding ShowSettingsDialogCommand}"/>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About"/>

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using print_quotes_calculator.Model;
 using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
+using print_quotes_calculator.Windows;
 using Unity;
 using Unity.Resolution;
 
@@ -23,17 +24,20 @@ namespace print_quotes_calculator.ViewModel
         public QuotesViewModel(UnityContainer container)
         {
             _container = container;
-            AddCommand = new RelayCommand(AddQuoteRow);
 
             var db = _container.Resolve<DatabaseHelper>();
             _materials = db.GetMaterials();
             _inks = db.GetInks();
 
+            _quoteRows = [];
             foreach (QuoteRow row in db.GetQuoteRows())
             {
                 _quoteRows.Add(row);
             }
             CalculateTotalCost();
+
+            AddCommand = new RelayCommand(AddQuoteRow);
+            ShowSettingsDialogCommand = new RelayCommand(ShowSettingsDialog);
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -87,6 +91,18 @@ namespace print_quotes_calculator.ViewModel
                 quoteId = _quoteRows.Last().Id + 1;
             }
             _quoteRows.Add(_container.Resolve<QuoteRow>(new ParameterOverride("id", quoteId)));
+        }
+
+        public ICommand ShowSettingsDialogCommand { get; }
+
+        public void ShowSettingsDialog()
+        {
+            var settingsDialog = _container.Resolve<SettingsDialog>();
+            settingsDialog.ShowDialog();
+
+            var db = _container.Resolve<DatabaseHelper>();
+            MaterialTypes = db.GetMaterials();
+            InkTypes = db.GetInks();
         }
 
 

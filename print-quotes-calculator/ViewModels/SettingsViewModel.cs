@@ -10,12 +10,14 @@ namespace print_quotes_calculator.ViewModels
     internal class SettingsViewModel : ISettingsViewModel, INotifyPropertyChanged
     {
         private readonly UnityContainer _container;
-        private string _materialName;
-        private decimal _materialCost;
-        private string _inkName;
-        private decimal _inkCost;
+        private string _textBoxName;
+        private decimal _textBoxCost;
+        private string _selectedName;
         private Dictionary<string, decimal> _materials;
         private Dictionary<string, decimal> _inks;
+        private Dictionary<string, decimal> _selectedCollection;
+        private bool _materialIsChecked;
+        private bool _inkIsChecked;
 
         public SettingsViewModel(UnityContainer container)
         {
@@ -24,49 +26,37 @@ namespace print_quotes_calculator.ViewModels
             _materials = db.GetMaterials();
             _inks = db.GetInks();
 
-            AddMaterialCommand = new RelayCommand(AddMaterial);
-            AddInkCommand = new RelayCommand(AddInk);
-            RemoveMaterialCommand = new RelayCommand(RemoveMaterial);
-            RemoveInkCommand = new RelayCommand(RemoveInk);
+            AddMaterialOrInkCommand = new RelayCommand(AddMaterialOrInk);
+            RemoveMaterialOrInkCommand = new RelayCommand(RemoveMaterialOrInk);
         }
 
-        public string MaterialName
+        public string TextBoxName
         {
-            get => _materialName;
+            get => _textBoxName;
             set
             {
-                _materialName = value;
-                RaisePropertyChanged(nameof(MaterialName));
+                _textBoxName = value;
+                RaisePropertyChanged(nameof(TextBoxName));
             }
         }
 
-        public decimal MaterialCost
+        public decimal TextBoxCost
         {
-            get => _materialCost;
+            get => _textBoxCost;
             set
             {
-                _materialCost = value;
-                RaisePropertyChanged(nameof(MaterialCost));
+                _textBoxCost = value;
+                RaisePropertyChanged(nameof(TextBoxCost));
             }
         }
 
-        public string InkName
+        public string SelectedName
         {
-            get => _inkName;
+            get => _selectedName;
             set
             {
-                _inkName = value;
-                RaisePropertyChanged(nameof(InkName));
-            }
-        }
-
-        public decimal InkCost
-        {
-            get => _inkCost;
-            set
-            {
-                _inkCost = value;
-                RaisePropertyChanged(nameof(InkCost));
+                _selectedName = value;
+                RaisePropertyChanged(nameof(SelectedName));
             }
         }
 
@@ -90,41 +80,72 @@ namespace print_quotes_calculator.ViewModels
             }
         }
 
-
-        public ICommand AddMaterialCommand { get; }
-
-        public void AddMaterial()
+        public Dictionary<string, decimal> SelectedCollection
         {
-            var db = _container.Resolve<DatabaseHelper>();
-            db.AddMaterial(MaterialName, MaterialCost);
-            Materials = db.GetMaterials();
+            get => _selectedCollection;
+            set
+            {
+                _selectedCollection = value;
+                RaisePropertyChanged(nameof(SelectedCollection));
+            }
         }
 
-        public ICommand AddInkCommand { get; }
-
-        public void AddInk()
+        public bool MaterialIsChecked
         {
-            var db = _container.Resolve<DatabaseHelper>();
-            db.AddInk(InkName, InkCost);
-            Inks = db.GetInks();
+            get => _materialIsChecked;
+            set
+            {
+                _materialIsChecked = value;
+                if (value) SelectedCollection = Materials;
+                RaisePropertyChanged(nameof(MaterialIsChecked));
+            }
         }
 
-        public ICommand RemoveMaterialCommand { get; }
-
-        public void RemoveMaterial()
+        public bool InkIsChecked
         {
-            var db = _container.Resolve<DatabaseHelper>();
-            db.RemoveMaterial(MaterialName);
-            Materials = db.GetMaterials();
+            get => _inkIsChecked;
+            set
+            {
+                _inkIsChecked = value;
+                if (value) SelectedCollection = Inks;
+                RaisePropertyChanged(nameof(InkIsChecked));
+            }
         }
 
-        public ICommand RemoveInkCommand { get; }
 
-        public void RemoveInk()
+        public ICommand AddMaterialOrInkCommand { get; }
+
+        public void AddMaterialOrInk()
         {
             var db = _container.Resolve<DatabaseHelper>();
-            db.RemoveInk(InkName);
-            Inks = db.GetInks();
+            if (MaterialIsChecked)
+            {
+                db.AddMaterial(TextBoxName, TextBoxCost);
+                SelectedCollection = Materials = db.GetMaterials();
+            }
+            else
+            {
+                db.AddInk(TextBoxName, TextBoxCost);
+                SelectedCollection = Inks = db.GetInks();
+            }
+        }
+
+
+        public ICommand RemoveMaterialOrInkCommand { get; }
+
+        public void RemoveMaterialOrInk()
+        {
+            var db = _container.Resolve<DatabaseHelper>();
+            if (MaterialIsChecked)
+            {
+                db.RemoveMaterial(SelectedName);
+                SelectedCollection = Materials = db.GetMaterials();
+            }
+            else
+            {
+                db.RemoveInk(SelectedName);
+                SelectedCollection = Inks = db.GetInks();
+            }
         }
 
 
