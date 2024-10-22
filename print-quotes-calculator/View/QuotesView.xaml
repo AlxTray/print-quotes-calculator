@@ -15,10 +15,6 @@
                 <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Cut"/>
-                <MenuItem Header="Copy"/>
-                <MenuItem Header="Paste"/>
-                <Separator/>
                 <MenuItem Header="Add Quote" Command="{Binding AddCommand}"/>
                 <MenuItem Header="Settings..."/>
             </MenuItem>
