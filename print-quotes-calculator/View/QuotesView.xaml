@@ -80,13 +80,13 @@
                     <Border BorderBrush="Black" BorderThickness="1"/>
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="1"/>
-                <StackPanel Width="204">
+                <StackPanel Width="206">
                     <Border BorderBrush="Black" BorderThickness="1"/>
                     <TextBlock Background="DimGray" Text="Description"/>
                     <ItemsControl ItemsSource="{Binding QuoteRows}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Description}" Width="204" Height="22"/>
+                                <TextBox Text="{Binding Description}" Width="206" Height="22"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
