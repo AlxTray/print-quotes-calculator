@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <None Remove="5fjgp1nb.ayw~" />
-    <None Remove="View\QuotesView.xaml~RF805370.TMP" />
+    <None Remove="Views\QuotesView.xaml~RF805370.TMP" />
   </ItemGroup>
 
   <ItemGroup>
