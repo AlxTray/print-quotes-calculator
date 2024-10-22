@@ -18,9 +18,9 @@ namespace print_quotes_calculator
             container.RegisterType<IQuoteCalculator, QuoteCalculator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IQuotesViewModel, QuotesViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IQuoteRow, QuoteRow>();
-            container.RegisterType<MainWindow>();
+            container.RegisterType<QuoteWindow>();
 
-            var mainWindow = container.Resolve<MainWindow>();
+            var mainWindow = container.Resolve<QuoteWindow>();
             mainWindow.Show();
         }
     }

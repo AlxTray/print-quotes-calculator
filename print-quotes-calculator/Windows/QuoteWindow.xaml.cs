@@ -4,9 +4,9 @@ using Unity;
 
 namespace print_quotes_calculator
 {
-    public partial class MainWindow : Window
+    public partial class QuoteWindow : Window
     {
-        public MainWindow(UnityContainer container)
+        public QuoteWindow(UnityContainer container)
         {
             InitializeComponent();
             this.quotesView.DataContext = container.Resolve<QuotesViewModel>();
