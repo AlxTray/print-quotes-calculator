@@ -68,8 +68,6 @@ namespace print_quotes_calculator.ViewModel
             }
         }
 
-        public IEnumerable<string> MaterialTypesKeys => MaterialTypes.Keys;
-
         public Dictionary<string, decimal> InkTypes
         {
             get => _inks;
@@ -79,8 +77,6 @@ namespace print_quotes_calculator.ViewModel
                 RaisePropertyChanged(nameof(MaterialTypes));
             }
         }
-
-        public IEnumerable<string> InkTypesKeys => InkTypes.Keys;
 
         public decimal TotalQuotesCost
         {
