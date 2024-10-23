@@ -47,15 +47,10 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Grid.Column="5" Grid.Row="1" Height="30" Width="75" MaxHeight="30" MaxWidth="75" Margin="0,0,0,15" Command="{Binding RemoveMaterialOrInkCommand}">Remove</Button>
-
-        <StackPanel Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="68,7,0,0">
-            <Button IsDefault="True" Content="OK" Width="70" Height="25" Margin="5, 0, 0, 0"/>
-        </StackPanel>
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="10,52,0,0" Grid.RowSpan="2">
+        <StackPanel Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="228" Margin="10,30,0,0">
             <Button IsDefault="True" Content="Import CSV" Width="70" Height="25" Margin="5, 0, 0, 0"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="10,7,0,0">
             <Button IsDefault="True" Content="Export CSV" Width="70" Height="25" Margin="5, 0, 0, 0"/>
+            <Button IsDefault="True" Content="OK" Width="70" Height="25" Margin="5, 0, 0, 0"/>
         </StackPanel>
         <RadioButton Grid.Column="0" Content="Ink" GroupName="Type" IsChecked="{Binding InkIsChecked}" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Margin="36,3,0,0"/>
         <RadioButton Grid.Column="1" Content="Material" GroupName="Type" IsChecked="{Binding MaterialIsChecked}" HorizontalAlignment="Left" Margin="18,3,0,0" Grid.Row="2" VerticalAlignment="Top"/>
