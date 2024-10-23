@@ -3,14 +3,13 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using print_quotes_calculator.Model;
 using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
 using print_quotes_calculator.Windows;
 using Unity;
 using Unity.Resolution;
 
-namespace print_quotes_calculator.ViewModel
+namespace print_quotes_calculator.ViewModels
 {
     internal class QuotesViewModel : IQuotesViewModel, INotifyPropertyChanged
     {

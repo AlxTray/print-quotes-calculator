@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using print_quotes_calculator.Utilities;
 
-namespace print_quotes_calculator.ViewModel
+namespace print_quotes_calculator.ViewModels
 {
     internal interface IQuotesViewModel
     {

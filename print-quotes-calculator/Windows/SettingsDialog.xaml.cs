@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using print_quotes_calculator.ViewModel;
+﻿using System.Windows;
 using print_quotes_calculator.ViewModels;
 using Unity;
 

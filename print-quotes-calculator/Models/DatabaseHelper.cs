@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using print_quotes_calculator.Utilities;
 using Unity;
 
 namespace print_quotes_calculator.Models
 {
-    class DatabaseHelper : IDatabaseHelper
+    internal class DatabaseHelper : IDatabaseHelper
     {
         private readonly UnityContainer _container;
         private readonly QuoteContext _quoteContext;

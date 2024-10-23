@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="print_quotes_calculator.View.QuotesView"
+﻿<UserControl x:Class="print_quotes_calculator.Views.QuotesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
