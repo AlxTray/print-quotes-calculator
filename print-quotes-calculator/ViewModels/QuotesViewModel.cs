@@ -3,7 +3,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore;
 using print_quotes_calculator.Model;
 using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;

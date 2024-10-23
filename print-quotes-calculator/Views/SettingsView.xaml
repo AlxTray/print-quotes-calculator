@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="230" d:DesignWidth="450">
+             d:DesignHeight="200" d:DesignWidth="500">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -29,13 +29,13 @@
             </Style>
         </Grid.Resources>
 
-        <Label Grid.Column="0" Grid.Row="0" Margin="0,3,87,3" Padding="0, 28, 0, 0" Grid.ColumnSpan="2">Name:</Label>
-        <Label Grid.Column="1" Grid.Row="0" Margin="0,3,63,3" Padding="0, 28, 0, 0" Grid.ColumnSpan="2">Cost:</Label>
-        <Label Grid.Column="3" Grid.Row="0" Margin="10,3,63,3" Padding="0, 28, 0, 0" Grid.ColumnSpan="3">Existing:</Label>
-        <TextBox Grid.Column="0" Grid.Row="1" Margin="0,0,5,15" Text="{Binding TextBoxName, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Margin="0,0,5,15" Text="{Binding TextBoxCost, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Column="2" Grid.Row="1" Margin="0,0,0,15" Command="{Binding AddMaterialOrInkCommand}">Add</Button>
-        <ListBox Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="10,52,5,0" Height="105" MaxHeight="105" ItemsSource="{Binding SelectedCollection}" SelectedValue="{Binding SelectedName}" SelectedValuePath="Key">
+        <Label Grid.Column="0" Grid.Row="0" Margin="0,3,87,3" Padding="0, 25, 0, 0" Grid.ColumnSpan="2">Name:</Label>
+        <Label Grid.Column="1" Grid.Row="0" Margin="0,3,63,3" Padding="0, 25, 0, 0" Grid.ColumnSpan="2">Cost:</Label>
+        <Label Grid.Column="3" Grid.Row="0" Margin="10,3,63,3" Padding="0, 25, 0, 0" Grid.ColumnSpan="3">Existing:</Label>
+        <TextBox Grid.Column="0" Grid.Row="1" Height="30" Width="75" MaxHeight="30" MaxWidth="75" Margin="0,0,5,15" Text="{Binding TextBoxName, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Height="30" Width="75" MaxHeight="30" MaxWidth="75" Margin="0,0,5,15" Text="{Binding TextBoxCost, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Grid.Column="2" Grid.Row="1" Height="30" Width="75" MaxHeight="30" MaxWidth="75" Margin="0,0,0,15" Command="{Binding AddMaterialOrInkCommand}">Add</Button>
+        <ListBox Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Height="90" Width="150" MaxHeight="90" MaxWidth="150" Margin="10, 0, 5, 0" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding SelectedCollection}" SelectedValue="{Binding SelectedName}" SelectedValuePath="Key">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -46,18 +46,18 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Column="6" Grid.Row="1" Margin="0,0,0,15" Command="{Binding RemoveMaterialOrInkCommand}">Remove</Button>
+        <Button Grid.Column="5" Grid.Row="1" Height="30" Width="75" MaxHeight="30" MaxWidth="75" Margin="0,0,0,15" Command="{Binding RemoveMaterialOrInkCommand}">Remove</Button>
 
-        <StackPanel Grid.Column="3" Grid.ColumnSpan="4" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="115,52,0,0" Grid.RowSpan="2">
+        <StackPanel Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="68,7,0,0">
             <Button IsDefault="True" Content="OK" Width="70" Height="25" Margin="5, 0, 0, 0"/>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="10,52,0,0" Grid.RowSpan="2">
             <Button IsDefault="True" Content="Import CSV" Width="70" Height="25" Margin="5, 0, 0, 0"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="35,52,0,0" Grid.RowSpan="2">
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="75" Margin="10,7,0,0">
             <Button IsDefault="True" Content="Export CSV" Width="70" Height="25" Margin="5, 0, 0, 0"/>
         </StackPanel>
-        <RadioButton Content="Ink" GroupName="Type" IsChecked="{Binding InkIsChecked}" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Margin="36,0,0,0"/>
-        <RadioButton Grid.Column="1" Content="Material" GroupName="Type" IsChecked="{Binding MaterialIsChecked}" HorizontalAlignment="Left" Margin="36,0,0,0" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+        <RadioButton Grid.Column="0" Content="Ink" GroupName="Type" IsChecked="{Binding InkIsChecked}" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Margin="36,3,0,0"/>
+        <RadioButton Grid.Column="1" Content="Material" GroupName="Type" IsChecked="{Binding MaterialIsChecked}" HorizontalAlignment="Left" Margin="18,3,0,0" Grid.Row="2" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
