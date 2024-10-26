@@ -28,6 +28,7 @@ namespace print_quotes_calculator.ViewModels
             _inks = db.GetInks();
 
             _quoteRows = [];
+            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
             foreach (QuoteRow row in db.GetQuoteRows())
             {
                 _quoteRows.Add(row);

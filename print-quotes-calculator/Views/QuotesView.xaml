@@ -22,100 +22,49 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <ScrollViewer Margin="0,25,0,19" Background="Gainsboro">
-            <WrapPanel>
-                <StackPanel Width="110">
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock Background="DimGray" Text="Material Type"/>
-                    <ItemsControl ItemsSource="{Binding QuoteRows}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ComboBox ItemsSource="{Binding DataContext.MaterialTypes.Keys, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                          SelectedValue="{Binding Material}"
-                                          Width="110"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                </StackPanel>
-                <Border BorderBrush="Black" BorderThickness="1"/>
-                <StackPanel Width="110">
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock Background="DimGray" Text="Material Usage (m²)"/>
-                    <ItemsControl ItemsSource="{Binding QuoteRows}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding MaterialUsage, UpdateSourceTrigger=PropertyChanged}" Width="110" Height="22"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                </StackPanel>
-                <Border BorderBrush="Black" BorderThickness="1"/>
-                <StackPanel Width="110">
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock Background="DimGray" Text="Ink Type"/>
-                    <ItemsControl ItemsSource="{Binding QuoteRows}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ComboBox ItemsSource="{Binding DataContext.InkTypes.Keys, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                          SelectedValue="{Binding Ink}"
-                                          Width="110"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                </StackPanel>
-                <Border BorderBrush="Black" BorderThickness="1"/>
-                <StackPanel Width="110">
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock Background="DimGray" Text="Ink Usage (m²)"/>
-                    <ItemsControl ItemsSource="{Binding QuoteRows}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding InkUsage, UpdateSourceTrigger=PropertyChanged}" Width="110" Height="22"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                </StackPanel>
-                <Border BorderBrush="Black" BorderThickness="1"/>
-                <StackPanel Width="206">
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock Background="DimGray" Text="Description"/>
-                    <ItemsControl ItemsSource="{Binding QuoteRows}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding Description}" Width="206" Height="22"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                </StackPanel>
-                <Border BorderBrush="Black" BorderThickness="1"/>
-                <StackPanel Width="110">
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock Background="DimGray" Text="Cost"/>
-                    <ItemsControl ItemsSource="{Binding QuoteRows}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="Gray" BorderThickness="1" Background="White">
-                                    <TextBlock Text="{Binding Path=QuoteCost, StringFormat='£{0}'}" Background="LightGray" Width="110" Height="20"/>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border BorderBrush="Black" BorderThickness="1"/>
-                </StackPanel>
-            </WrapPanel>
-        </ScrollViewer>
+        <DataGrid Margin="0,25,0,19" Background="Gainsboro" ItemsSource="{Binding QuoteRows}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn Header="Material" SelectedItemBinding="{Binding Material}">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTextColumn Header="Material Usage" Binding="{Binding MaterialUsage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridComboBoxColumn Header="Ink" SelectedItemBinding="{Binding Ink}">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTextColumn Header="Ink Usage" Binding="{Binding InkUsage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Cost" Binding="{Binding QuoteCost, StringFormat='£{0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <StatusBar VerticalAlignment="Bottom" Height="19" Background="DarkGray" FontSize="11">
             <StatusBarItem>
-                <TextBlock Text="{Binding Path=QuoteRows.Count, StringFormat='{}{0} Quotes'}"/>
+                <TextBlock Text="{Binding QuoteRows.Count, StringFormat='{}{0} Quotes'}"/>
             </StatusBarItem>
             <Separator/>
             <StatusBarItem>
-                <TextBlock Text="{Binding Path=TotalQuotesCost, StringFormat='Total Cost: £{0}'}"/>
+                <TextBlock Text="{Binding TotalQuotesCost, StringFormat='Total Cost: £{0}'}"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>
