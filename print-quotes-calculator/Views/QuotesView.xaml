@@ -24,38 +24,38 @@
         </Menu>
         <DataGrid Margin="0,25,0,19" Background="Gainsboro" ItemsSource="{Binding QuoteRows}" AutoGenerateColumns="False" ColumnWidth="*">
             <DataGrid.Columns>
-                <DataGridComboBoxColumn Header="Material" SelectedItemBinding="{Binding Material}">
+                <DataGridComboBoxColumn Header="Material" SelectedItemBinding="{Binding Material, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys,
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys, UpdateSourceTrigger=PropertyChanged,
                                 RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys,
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys, UpdateSourceTrigger=PropertyChanged,
                                 RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Material Usage" Binding="{Binding MaterialUsage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridComboBoxColumn Header="Ink" SelectedItemBinding="{Binding Ink}">
+                <DataGridComboBoxColumn Header="Ink" SelectedItemBinding="{Binding Ink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys,
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys, UpdateSourceTrigger=PropertyChanged,
                                 RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys,
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys, UpdateSourceTrigger=PropertyChanged,
                                 RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Ink Usage" Binding="{Binding InkUsage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Cost" Binding="{Binding QuoteCost, StringFormat='£{0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Cost" Binding="{Binding QuoteCost, StringFormat='£{0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
         <StatusBar VerticalAlignment="Bottom" Height="19" Background="DarkGray" FontSize="11">
