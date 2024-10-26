@@ -22,7 +22,7 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <DataGrid Margin="0,25,0,19" Background="Gainsboro" ItemsSource="{Binding QuoteRows}" AutoGenerateColumns="False">
+        <DataGrid Margin="0,25,0,19" Background="Gainsboro" ItemsSource="{Binding QuoteRows}" AutoGenerateColumns="False" ColumnWidth="*">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="Material" SelectedItemBinding="{Binding Material}">
                     <DataGridComboBoxColumn.ElementStyle>
