@@ -148,7 +148,7 @@ namespace print_quotes_calculator.ViewModels
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void RaisePropertyChanged(string propertyName)
         {
