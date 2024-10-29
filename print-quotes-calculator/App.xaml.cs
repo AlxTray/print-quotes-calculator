@@ -4,7 +4,6 @@ using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
 using print_quotes_calculator.Windows;
 using Unity;
-using Unity.Lifetime;
 
 namespace print_quotes_calculator
 {
@@ -17,9 +16,8 @@ namespace print_quotes_calculator
             var container = new UnityContainer();
             container.RegisterType<IQuoteContext, QuoteContext>();
             container.RegisterType<IDatabaseHelper, DatabaseHelper>();
-            container.RegisterType<IQuoteCalculator, QuoteCalculator>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IQuotesViewModel, QuotesViewModel>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IQuoteRow, QuoteRow>();
+            container.RegisterType<IQuoteCalculator, QuoteCalculator>();
+            container.RegisterType<IQuotesViewModel, QuotesViewModel>();
             container.RegisterType<QuoteWindow>();
             container.RegisterType<ISettingsViewModel, SettingsViewModel>();
             container.RegisterType<SettingsDialog>();

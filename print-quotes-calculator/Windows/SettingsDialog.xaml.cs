@@ -1,15 +1,14 @@
 ﻿using System.Windows;
 using print_quotes_calculator.ViewModels;
-using Unity;
 
 namespace print_quotes_calculator.Windows
 {
     public partial class SettingsDialog : Window
     {
-        public SettingsDialog(UnityContainer container)
+        internal SettingsDialog(ISettingsViewModel settingsViewModel)
         {
             InitializeComponent();
-            this.settingsView.DataContext = container.Resolve<SettingsViewModel>();
+            settingsView.DataContext = settingsViewModel;
         }
     }
 }

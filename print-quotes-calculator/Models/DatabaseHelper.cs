@@ -6,13 +6,11 @@ namespace print_quotes_calculator.Models
 {
     internal class DatabaseHelper : IDatabaseHelper
     {
-        private readonly UnityContainer _container;
         private readonly QuoteContext _quoteContext;
 
-        public DatabaseHelper(UnityContainer container)
+        public DatabaseHelper(QuoteContext quoteContext)
         {
-            _container = container;
-            _quoteContext = _container.Resolve<QuoteContext>();
+            _quoteContext = quoteContext;
             _quoteContext.Database.Migrate();
         }
 

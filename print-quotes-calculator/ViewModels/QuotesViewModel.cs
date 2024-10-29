@@ -13,19 +13,22 @@ namespace print_quotes_calculator.ViewModels
 {
     internal class QuotesViewModel : IQuotesViewModel, INotifyPropertyChanged
     {
-        private readonly UnityContainer _container;
+        private readonly IDatabaseHelper _db;
+        private readonly IQuoteCalculator _quoteCalculator;
+        private readonly SettingsDialog _settingsDialog;
         private ObservableCollection<QuoteRow> _quoteRows;
         private Dictionary<string, decimal> _materials;
         private Dictionary<string, decimal> _inks;
         private decimal _totalQuotesCost;
 
-        public QuotesViewModel(UnityContainer container)
+        public QuotesViewModel(IDatabaseHelper db, IQuoteCalculator quoteCalculator, SettingsDialog settingsDialog)
         {
-            _container = container;
+            _db = db;
+            _quoteCalculator = quoteCalculator;
+            _settingsDialog = settingsDialog;
 
-            var db = _container.Resolve<DatabaseHelper>();
-            _materials = db.GetMaterials();
-            _inks = db.GetInks();
+            _materials = _db.GetMaterials();
+            _inks = _db.GetInks();
 
             _quoteRows = [];
             _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
@@ -89,19 +92,16 @@ namespace print_quotes_calculator.ViewModels
             {
                 quoteId = _quoteRows.Last().Id + 1;
             }
-            _quoteRows.Add(_container.Resolve<QuoteRow>(new ParameterOverride("id", quoteId)));
+            _quoteRows.Add(new QuoteRow(quoteId));
         }
 
         public ICommand ShowSettingsDialogCommand { get; }
 
         public void ShowSettingsDialog()
         {
-            var settingsDialog = _container.Resolve<SettingsDialog>();
-            settingsDialog.ShowDialog();
-
-            var db = _container.Resolve<DatabaseHelper>();
-            MaterialTypes = db.GetMaterials();
-            InkTypes = db.GetInks();
+            _settingsDialog.ShowDialog();
+            MaterialTypes = _db.GetMaterials();
+            InkTypes = _db.GetInks();
         }
 
 
@@ -148,12 +148,10 @@ namespace print_quotes_calculator.ViewModels
                 quoteRow.QuoteCost = 0.00m;
                 return;
             }
-            quoteRow.QuoteCost = _container.Resolve<QuoteCalculator>()
-                .CalculateQuote(quoteRow.MaterialUsage, materialCost, quoteRow.InkUsage, inkCost);
+            quoteRow.QuoteCost = _quoteCalculator.CalculateQuote(quoteRow.MaterialUsage, materialCost, quoteRow.InkUsage, inkCost);
             CalculateTotalCost();
 
-            var db = _container.Resolve<DatabaseHelper>();
-            db.AddOrUpdateQuoteRow(quoteRow);
+            _db.AddOrUpdateQuoteRow(quoteRow);
         }
 
 

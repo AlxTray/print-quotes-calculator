@@ -6,10 +6,10 @@ namespace print_quotes_calculator.Windows
 {
     public partial class QuoteWindow : Window
     {
-        public QuoteWindow(UnityContainer container)
+        internal QuoteWindow(IQuotesViewModel quotesViewModel)
         {
             InitializeComponent();
-            this.quotesView.DataContext = container.Resolve<QuotesViewModel>();
+            quotesView.DataContext = quotesViewModel;
         }
     }
 }
