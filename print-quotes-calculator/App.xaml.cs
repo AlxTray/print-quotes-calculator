@@ -1,7 +1,7 @@
-﻿using print_quotes_calculator.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
+using print_quotes_calculator.ViewModels;
 using print_quotes_calculator.Windows;
 using Unity;
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using print_quotes_calculator.Utilities;
-using Unity;
 
 namespace print_quotes_calculator.Models
 {

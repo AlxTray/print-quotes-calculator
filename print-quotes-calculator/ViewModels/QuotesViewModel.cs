@@ -6,8 +6,6 @@ using CommunityToolkit.Mvvm.Input;
 using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
 using print_quotes_calculator.Windows;
-using Unity;
-using Unity.Resolution;
 
 namespace print_quotes_calculator.ViewModels
 {

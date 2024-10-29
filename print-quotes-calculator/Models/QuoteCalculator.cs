@@ -1,6 +1,4 @@
-﻿using print_quotes_calculator.Models;
-
-namespace print_quotes_calculator.Models
+﻿namespace print_quotes_calculator.Models
 {
     internal class QuoteCalculator : IQuoteCalculator
     {

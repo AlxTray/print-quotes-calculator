@@ -2,7 +2,7 @@
 
 namespace print_quotes_calculator.Utilities
 {
-    internal interface IQuoteContext 
+    internal interface IQuoteContext
     {
         DbSet<Material> Materials { get; set; }
         DbSet<Ink> Inks { get; set; }
