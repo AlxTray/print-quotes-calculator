@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Print Quotes Calculator" Height="450" Width="800">
     <Grid>
-        <local:QuotesView x:Name="quotesView" />
+        <local:QuotesView x:Name="QuotesView" />
     </Grid>
 </Window>

@@ -8,7 +8,7 @@ namespace print_quotes_calculator.Windows
         internal QuoteWindow(IQuotesViewModel quotesViewModel)
         {
             InitializeComponent();
-            quotesView.DataContext = quotesViewModel;
+            QuotesView.DataContext = quotesViewModel;
         }
     }
 }

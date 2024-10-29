@@ -8,7 +8,7 @@ namespace print_quotes_calculator.Windows
         internal SettingsDialog(ISettingsViewModel settingsViewModel)
         {
             InitializeComponent();
-            settingsView.DataContext = settingsViewModel;
+            SettingsView.DataContext = settingsViewModel;
         }
     }
 }
