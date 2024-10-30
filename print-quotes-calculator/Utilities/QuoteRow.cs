@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using CsvHelper.Configuration.Attributes;
 
 namespace print_quotes_calculator.Utilities
 {
@@ -22,6 +23,7 @@ namespace print_quotes_calculator.Utilities
                 RaisePropertyChanged(nameof(Material));
             }
         }
+
         public decimal MaterialUsage
         {
             get => _materialUsage;
@@ -31,6 +33,7 @@ namespace print_quotes_calculator.Utilities
                 RaisePropertyChanged(nameof(MaterialUsage));
             }
         }
+
         public string Ink
         {
             get => _ink;
@@ -40,6 +43,7 @@ namespace print_quotes_calculator.Utilities
                 RaisePropertyChanged(nameof(Ink));
             }
         }
+
         public decimal InkUsage
         {
             get => _inkUsage;
@@ -49,6 +53,7 @@ namespace print_quotes_calculator.Utilities
                 RaisePropertyChanged(nameof(InkUsage));
             }
         }
+
         public string Description
         {
             get => _description;
@@ -58,6 +63,7 @@ namespace print_quotes_calculator.Utilities
                 RaisePropertyChanged(nameof(Description));
             }
         }
+
         public decimal QuoteCost
         {
             get => _quoteCost;

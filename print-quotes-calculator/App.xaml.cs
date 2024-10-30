@@ -17,6 +17,7 @@ namespace print_quotes_calculator
             container.RegisterType<IQuoteContext, QuoteContext>();
             container.RegisterType<IDatabaseHelper, DatabaseHelper>();
             container.RegisterType<IQuoteCalculator, QuoteCalculator>();
+            container.RegisterType<ICsvWrapper, CsvWrapper>();
             container.RegisterType<IQuotesViewModel, QuotesViewModel>();
             container.RegisterType<QuoteWindow>();
             container.RegisterType<ISettingsViewModel, SettingsViewModel>();

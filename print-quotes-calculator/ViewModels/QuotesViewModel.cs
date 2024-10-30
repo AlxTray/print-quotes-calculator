@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
 using print_quotes_calculator.Windows;
@@ -13,16 +14,18 @@ namespace print_quotes_calculator.ViewModels
     {
         private readonly IDatabaseHelper _db;
         private readonly IQuoteCalculator _quoteCalculator;
+        private readonly ICsvWrapper _csvWrapper;
         private readonly SettingsDialog _settingsDialog;
         private ObservableCollection<QuoteRow> _quoteRows;
         private Dictionary<string, decimal> _materials;
         private Dictionary<string, decimal> _inks;
         private decimal _totalQuotesCost;
 
-        public QuotesViewModel(IDatabaseHelper db, IQuoteCalculator quoteCalculator, SettingsDialog settingsDialog)
+        public QuotesViewModel(IDatabaseHelper db, IQuoteCalculator quoteCalculator, ICsvWrapper csvWrapper, SettingsDialog settingsDialog)
         {
             _db = db;
             _quoteCalculator = quoteCalculator;
+            _csvWrapper = csvWrapper;
             _settingsDialog = settingsDialog;
 
             _materials = _db.GetMaterials();
@@ -38,6 +41,8 @@ namespace print_quotes_calculator.ViewModels
 
             AddCommand = new RelayCommand(AddQuoteRow);
             ShowSettingsDialogCommand = new RelayCommand(ShowSettingsDialog);
+            SaveCommand = new RelayCommand(SaveQuoteRows);
+            OpenCommand = new RelayCommand(OpenQuoteRows);
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -102,6 +107,39 @@ namespace print_quotes_calculator.ViewModels
             InkTypes = _db.GetInks();
         }
 
+        public ICommand SaveCommand { get; }
+
+        public void SaveQuoteRows()
+        {
+            var saveDialog = new SaveFileDialog
+            {
+                FileName = "Quotes",
+                DefaultExt = ".csv",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = saveDialog.ShowDialog();
+            if (result == true) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
+        }
+
+        public ICommand OpenCommand { get; }
+
+        public void OpenQuoteRows()
+        {
+            var openDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = "Select a Quotes CSV file",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = openDialog.ShowDialog();
+            if (result != true) return;
+
+            _quoteRows.Clear();
+            QuoteRows = _csvWrapper.ReadQuotes(openDialog.FileName, QuoteRows);
+        }
+
 
         private void CalculateTotalCost()
         {
@@ -109,7 +147,7 @@ namespace print_quotes_calculator.ViewModels
         }
 
 
-        private void QuoteRow_CollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
+        public void QuoteRow_CollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
         {
             if (eventArgs.NewItems != null)
             {
