@@ -39,10 +39,13 @@ namespace print_quotes_calculator.ViewModels
             }
             CalculateTotalCost();
 
+            // TODO: probably best to change to function to remove each row from the database
+            NewCommand = new RelayCommand(() => QuoteRows.Clear());
             AddCommand = new RelayCommand(AddQuoteRow);
             ShowSettingsDialogCommand = new RelayCommand(ShowSettingsDialog);
             SaveCommand = new RelayCommand(SaveQuoteRows);
             OpenCommand = new RelayCommand(OpenQuoteRows);
+            AppendCommand = new RelayCommand(AppendQuoteRows);
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -85,6 +88,7 @@ namespace print_quotes_calculator.ViewModels
             }
         }
 
+        public ICommand NewCommand { get; }
 
         public ICommand AddCommand { get; }
 
@@ -122,9 +126,17 @@ namespace print_quotes_calculator.ViewModels
             if (result == true) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
         }
 
-        public ICommand OpenCommand { get; }
+        public ICommand OpenCommand { get;  }
 
         public void OpenQuoteRows()
+        {
+            QuoteRows.Clear();
+            AppendQuoteRows();
+        }
+
+        public ICommand AppendCommand { get; }
+
+        public void AppendQuoteRows()
         {
             var openDialog = new OpenFileDialog
             {
@@ -135,8 +147,6 @@ namespace print_quotes_calculator.ViewModels
 
             var result = openDialog.ShowDialog();
             if (result != true) return;
-
-            _quoteRows.Clear();
             QuoteRows = _csvWrapper.ReadQuotes(openDialog.FileName, QuoteRows);
         }
 
