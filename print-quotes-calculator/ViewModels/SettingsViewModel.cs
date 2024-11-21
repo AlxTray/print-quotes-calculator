@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using print_quotes_calculator.Models;
 using Unity;
 
@@ -8,7 +9,8 @@ namespace print_quotes_calculator.ViewModels
 {
     internal class SettingsViewModel : ISettingsViewModel, INotifyPropertyChanged
     {
-        private readonly UnityContainer _container;
+        private readonly IDatabaseHelper _databaseHelper;
+        private readonly ICsvWrapper _csvWrapper;
         private string _textBoxName;
         private decimal _textBoxCost;
         private string _selectedName;
@@ -18,15 +20,18 @@ namespace print_quotes_calculator.ViewModels
         private bool _materialIsChecked;
         private bool _inkIsChecked;
 
-        public SettingsViewModel(UnityContainer container)
+        public SettingsViewModel(IDatabaseHelper databaseHelper, ICsvWrapper csvWrapper)
         {
-            _container = container;
-            var db = _container.Resolve<DatabaseHelper>();
-            _materials = db.GetMaterials();
-            _inks = db.GetInks();
+            _databaseHelper = databaseHelper;
+            _csvWrapper = csvWrapper;
+
+            _materials = _databaseHelper.GetMaterials();
+            _inks = _databaseHelper.GetInks();
 
             AddMaterialOrInkCommand = new RelayCommand(AddMaterialOrInk);
             RemoveMaterialOrInkCommand = new RelayCommand(RemoveMaterialOrInk);
+            WriteMaterialsOrInksCommand = new RelayCommand(WriteMaterialsOrInks);
+            ReadMaterialsOrInksCommand = new RelayCommand(ReadMaterialsOrInks);
         }
 
         public string TextBoxName
@@ -116,16 +121,15 @@ namespace print_quotes_calculator.ViewModels
 
         public void AddMaterialOrInk()
         {
-            var db = _container.Resolve<DatabaseHelper>();
             if (MaterialIsChecked)
             {
-                db.AddMaterial(TextBoxName, TextBoxCost);
-                SelectedCollection = Materials = db.GetMaterials();
+                _databaseHelper.AddMaterial(TextBoxName, TextBoxCost);
+                SelectedCollection = Materials = _databaseHelper.GetMaterials();
             }
             else
             {
-                db.AddInk(TextBoxName, TextBoxCost);
-                SelectedCollection = Inks = db.GetInks();
+                _databaseHelper.AddInk(TextBoxName, TextBoxCost);
+                SelectedCollection = Inks = _databaseHelper.GetInks();
             }
         }
 
@@ -134,16 +138,65 @@ namespace print_quotes_calculator.ViewModels
 
         public void RemoveMaterialOrInk()
         {
-            var db = _container.Resolve<DatabaseHelper>();
             if (MaterialIsChecked)
             {
-                db.RemoveMaterial(SelectedName);
-                SelectedCollection = Materials = db.GetMaterials();
+                _databaseHelper.RemoveMaterial(SelectedName);
+                SelectedCollection = Materials = _databaseHelper.GetMaterials();
             }
             else
             {
-                db.RemoveInk(SelectedName);
-                SelectedCollection = Inks = db.GetInks();
+                _databaseHelper.RemoveInk(SelectedName);
+                SelectedCollection = Inks = _databaseHelper.GetInks();
+            }
+        }
+
+
+        public ICommand WriteMaterialsOrInksCommand { get; }
+
+        public void WriteMaterialsOrInks()
+        {
+            var saveDialog = new SaveFileDialog
+            {
+                FileName = "Quotes",
+                DefaultExt = ".csv",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = saveDialog.ShowDialog();
+            if (result != true) return;
+
+            if (MaterialIsChecked)
+            {
+                _csvWrapper.WriteMaterials(saveDialog.FileName, SelectedCollection);
+            }
+            else
+            {
+                _csvWrapper.WriteInks(saveDialog.FileName, SelectedCollection);
+            }
+        }
+
+
+        public ICommand ReadMaterialsOrInksCommand { get; }
+
+        public void ReadMaterialsOrInks()
+        {
+            var openDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = "Select a Quotes CSV file",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = openDialog.ShowDialog();
+            if (result != true) return;
+
+            if (MaterialIsChecked)
+            {
+                SelectedCollection = Materials = _csvWrapper.ReadMaterials(openDialog.FileName, SelectedCollection);
+            }
+            else
+            {
+                SelectedCollection = Inks = _csvWrapper.ReadInks(openDialog.FileName, SelectedCollection);
             }
         }
 
