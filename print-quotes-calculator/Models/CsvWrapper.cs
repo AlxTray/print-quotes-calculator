@@ -11,13 +11,9 @@ namespace print_quotes_calculator.Models
     {
         public ObservableCollection<QuoteRow> ReadQuotes(string csvPath, ObservableCollection<QuoteRow> quoteRows)
         {
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-            {
-                PrepareHeaderForMatch = args => args.Header.ToLower(),
-            };
 
             using var reader = new StreamReader(csvPath);
-            using var csv = new CsvReader(reader, config);
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
             var records = csv.GetRecords<QuoteRow>();
 
             foreach (var record in records)

@@ -12,6 +12,10 @@ namespace print_quotes_calculator.Utilities
         private string _description = string.Empty;
         private decimal _quoteCost = 0.00m;
 
+        // Needed for when reading the CSV by CSVHelper,
+        // so that the id constructor is first 0 and then populated by the Id property
+        public QuoteRow() : this(0) { }
+
         public long Id { get; set; } = id;
 
         public string Material
