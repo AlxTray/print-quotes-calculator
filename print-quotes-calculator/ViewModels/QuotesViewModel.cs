@@ -26,6 +26,7 @@ namespace print_quotes_calculator.ViewModels
             _db = db;
             _quoteCalculator = quoteCalculator;
             _csvWrapper = csvWrapper;
+            // TODO: If settings is opened multiple time fails as same instance used
             _settingsDialog = settingsDialog;
 
             _materials = _db.GetMaterials();

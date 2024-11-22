@@ -64,32 +64,20 @@ namespace print_quotes_calculator.ViewModels
             }
         }
 
-        public Dictionary<string, decimal> Materials
-        {
-            get => _materials;
-            set
-            {
-                _materials = value;
-                RaisePropertyChanged(nameof(Materials));
-            }
-        }
-
-        public Dictionary<string, decimal> Inks
-        {
-            get => _inks;
-            set
-            {
-                _inks = value;
-                RaisePropertyChanged(nameof(Inks));
-            }
-        }
-
         public Dictionary<string, decimal> SelectedCollection
         {
             get => _selectedCollection;
             set
             {
                 _selectedCollection = value;
+                if (MaterialIsChecked)
+                {
+                    _materials = value;
+                }
+                else
+                {
+                    _inks = value;
+                }
                 RaisePropertyChanged(nameof(SelectedCollection));
             }
         }
@@ -100,7 +88,8 @@ namespace print_quotes_calculator.ViewModels
             set
             {
                 _materialIsChecked = value;
-                if (value) SelectedCollection = Materials;
+                _inkIsChecked = !value;
+                if (value) SelectedCollection = _materials;
                 RaisePropertyChanged(nameof(MaterialIsChecked));
             }
         }
@@ -111,7 +100,8 @@ namespace print_quotes_calculator.ViewModels
             set
             {
                 _inkIsChecked = value;
-                if (value) SelectedCollection = Inks;
+                _materialIsChecked = !value;
+                if (value) SelectedCollection = _inks;
                 RaisePropertyChanged(nameof(InkIsChecked));
             }
         }
@@ -124,12 +114,12 @@ namespace print_quotes_calculator.ViewModels
             if (MaterialIsChecked)
             {
                 _databaseHelper.AddMaterial(TextBoxName, TextBoxCost);
-                SelectedCollection = Materials = _databaseHelper.GetMaterials();
+                SelectedCollection = _databaseHelper.GetMaterials();
             }
             else
             {
                 _databaseHelper.AddInk(TextBoxName, TextBoxCost);
-                SelectedCollection = Inks = _databaseHelper.GetInks();
+                SelectedCollection = _databaseHelper.GetInks();
             }
         }
 
@@ -141,12 +131,12 @@ namespace print_quotes_calculator.ViewModels
             if (MaterialIsChecked)
             {
                 _databaseHelper.RemoveMaterial(SelectedName);
-                SelectedCollection = Materials = _databaseHelper.GetMaterials();
+                SelectedCollection = _databaseHelper.GetMaterials();
             }
             else
             {
                 _databaseHelper.RemoveInk(SelectedName);
-                SelectedCollection = Inks = _databaseHelper.GetInks();
+                SelectedCollection = _databaseHelper.GetInks();
             }
         }
 
@@ -192,11 +182,11 @@ namespace print_quotes_calculator.ViewModels
 
             if (MaterialIsChecked)
             {
-                SelectedCollection = Materials = _csvWrapper.ReadMaterials(openDialog.FileName, SelectedCollection);
+                SelectedCollection = _csvWrapper.ReadMaterials(openDialog.FileName, SelectedCollection);
             }
             else
             {
-                SelectedCollection = Inks = _csvWrapper.ReadInks(openDialog.FileName, SelectedCollection);
+                SelectedCollection = _csvWrapper.ReadInks(openDialog.FileName, SelectedCollection);
             }
         }
 
