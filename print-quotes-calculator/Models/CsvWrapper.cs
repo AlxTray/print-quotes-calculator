@@ -38,7 +38,8 @@ namespace print_quotes_calculator.Models
             {
                 materials.Add(record.Name, record.Cost);
             }
-            return materials;
+            // Idk: property will not be set otherwise when return value is set to SelectedCollection
+            return materials.ToDictionary();
         }
 
         public void WriteMaterials(string csvPath, Dictionary<string, decimal> materials)
@@ -60,7 +61,8 @@ namespace print_quotes_calculator.Models
             {
                 inks.Add(record.Name, record.Cost);
             }
-            return inks;
+            // Idk: property will not be set otherwise when return value is set to SelectedCollection
+            return inks.ToDictionary();
         }
 
         public void WriteInks(string csvPath, Dictionary<string, decimal> inks)

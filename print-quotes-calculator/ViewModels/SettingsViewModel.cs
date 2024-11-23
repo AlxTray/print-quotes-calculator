@@ -3,7 +3,6 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using print_quotes_calculator.Models;
-using Unity;
 
 namespace print_quotes_calculator.ViewModels
 {
