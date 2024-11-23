@@ -8,6 +8,13 @@ namespace print_quotes_calculator.Models
 {
     internal class CsvWrapper : ICsvWrapper
     {
+        private readonly IDatabaseHelper _databaseHelper;
+
+        public CsvWrapper(IDatabaseHelper databaseHelper)
+        {
+            _databaseHelper = databaseHelper;
+        }
+
         public ObservableCollection<QuoteRow> ReadQuotes(string csvPath, ObservableCollection<QuoteRow> quoteRows)
         {
             using var reader = new StreamReader(csvPath);
@@ -37,6 +44,7 @@ namespace print_quotes_calculator.Models
             foreach (var record in records)
             {
                 materials.Add(record.Name, record.Cost);
+                _databaseHelper.AddMaterial(record.Name, record.Cost);
             }
             // Idk: property will not be set otherwise when return value is set to SelectedCollection
             return materials.ToDictionary();
@@ -60,6 +68,7 @@ namespace print_quotes_calculator.Models
             foreach (var record in records)
             {
                 inks.Add(record.Name, record.Cost);
+                _databaseHelper.AddInk(record.Name, record.Cost);
             }
             // Idk: property will not be set otherwise when return value is set to SelectedCollection
             return inks.ToDictionary();
