@@ -180,6 +180,7 @@ namespace print_quotes_calculator.ViewModels
                 foreach (QuoteRow quoteRow in eventArgs.NewItems)
                 {
                     quoteRow.PropertyChanged += QuoteRow_PropertyChanged;
+                    _db.AddOrUpdateQuoteRow(quoteRow);
                 }
             }
 
@@ -188,6 +189,7 @@ namespace print_quotes_calculator.ViewModels
                 foreach (QuoteRow quoteRow in eventArgs.OldItems)
                 {
                     quoteRow.PropertyChanged -= QuoteRow_PropertyChanged;
+                    _db.RemoveQuoteRow(quoteRow);
                 }
             }
         }
