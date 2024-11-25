@@ -24,6 +24,7 @@ namespace print_quotes_calculator.Models
             foreach (var record in records)
             {
                 quoteRows.Add(record);
+                _databaseHelper.AddOrUpdateQuoteRow(record);
             }
             return quoteRows;
         }

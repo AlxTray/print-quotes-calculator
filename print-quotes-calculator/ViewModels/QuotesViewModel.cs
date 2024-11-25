@@ -145,7 +145,7 @@ namespace print_quotes_calculator.ViewModels
 
         public void OpenQuoteRows()
         {
-            QuoteRows.Clear();
+            ClearQuoteRows();
             AppendQuoteRows();
         }
 
