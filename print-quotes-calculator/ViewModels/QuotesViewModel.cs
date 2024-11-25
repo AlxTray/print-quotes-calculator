@@ -94,11 +94,11 @@ namespace print_quotes_calculator.ViewModels
 
         public void ClearQuoteRows()
         {
-            foreach (var row in QuoteRows)
+            // Remove each item one by one as .Clear() does not fire CollectionChanged property
+            foreach (var row in QuoteRows.ToList())
             {
-                _db.RemoveQuoteRow(row);
+                QuoteRows.Remove(row);
             }
-            QuoteRows.Clear();
         }
 
 
@@ -180,7 +180,6 @@ namespace print_quotes_calculator.ViewModels
                 foreach (QuoteRow quoteRow in eventArgs.NewItems)
                 {
                     quoteRow.PropertyChanged += QuoteRow_PropertyChanged;
-                    _db.AddOrUpdateQuoteRow(quoteRow);
                 }
             }
 
