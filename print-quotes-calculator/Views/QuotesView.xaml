@@ -25,7 +25,7 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <local:BindableSelectionDataGrid Margin="0,25,0,19" Background="Gainsboro" ItemsSource="{Binding QuoteRows}" SelectedItems="{Binding SelectedRows, Mode=OneWayToSource}" SelectionUnit="FullRow" AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="False">
+        <local:BindableSelectionDataGrid Margin="0,25,0,19" Background="Gainsboro" AlternatingRowBackground="Gainsboro" ItemsSource="{Binding QuoteRows}" SelectedItems="{Binding SelectedRows, Mode=OneWayToSource}" SelectionUnit="FullRow" AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="Material" SelectedItemBinding="{Binding Material, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridComboBoxColumn.ElementStyle>
