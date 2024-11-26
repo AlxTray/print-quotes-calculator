@@ -14,8 +14,6 @@
                 <MenuItem Header="Open and Replace..." Command="{Binding OpenCommand}"/>
                 <MenuItem Header="Open and Append..." Command="{Binding AppendCommand}"/>
                 <MenuItem Header="Export to CSV..." Command="{Binding SaveCommand}"/>
-                <Separator/>
-                <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Add Quote" Command="{Binding AddCommand}"/>
