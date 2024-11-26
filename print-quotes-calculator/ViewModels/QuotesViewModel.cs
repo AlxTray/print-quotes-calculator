@@ -206,6 +206,9 @@ namespace print_quotes_calculator.ViewModels
                 foreach (QuoteRow quoteRow in eventArgs.NewItems)
                 {
                     quoteRow.PropertyChanged += QuoteRow_PropertyChanged;
+                    if (quoteRow.QuoteCost == 0) continue;
+                    _db.AddOrUpdateQuoteRow(quoteRow);
+                    CalculateTotalCost();
                 }
             }
 
@@ -215,6 +218,7 @@ namespace print_quotes_calculator.ViewModels
                 {
                     quoteRow.PropertyChanged -= QuoteRow_PropertyChanged;
                     _db.RemoveQuoteRow(quoteRow);
+                    CalculateTotalCost();
                 }
             }
         }
