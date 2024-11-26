@@ -42,7 +42,6 @@ namespace print_quotes_calculator.ViewModels
             }
             CalculateTotalCost();
 
-            // TODO: probably best to change to function to remove each row from the database
             NewCommand = new RelayCommand(ClearQuoteRows);
             AddCommand = new RelayCommand(AddQuoteRow);
             RemoveCommand = new RelayCommand(RemoveSelectedQuoteRows);
@@ -136,6 +135,7 @@ namespace print_quotes_calculator.ViewModels
             // modifying SelectedRows which stops iteration
             while (SelectedRows.Count != 0)
             {
+                // As above, removing from QuoteRows will also remove from SelectedRows so just get first item until list is empty
                 QuoteRows.Remove((QuoteRow)SelectedRows[0]);
             }
         }
