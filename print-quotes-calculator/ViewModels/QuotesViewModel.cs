@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace print_quotes_calculator.ViewModels
         private readonly ICsvWrapper _csvWrapper;
         private readonly SettingsDialog _settingsDialog;
         private ObservableCollection<QuoteRow> _quoteRows;
+        private IList _selectedRows;
         private Dictionary<string, decimal> _materials;
         private Dictionary<string, decimal> _inks;
         private decimal _totalQuotesCost;
@@ -43,6 +45,7 @@ namespace print_quotes_calculator.ViewModels
             // TODO: probably best to change to function to remove each row from the database
             NewCommand = new RelayCommand(ClearQuoteRows);
             AddCommand = new RelayCommand(AddQuoteRow);
+            RemoveCommand = new RelayCommand(RemoveSelectedQuoteRows);
             ShowSettingsDialogCommand = new RelayCommand(ShowSettingsDialog);
             SaveCommand = new RelayCommand(SaveQuoteRows);
             OpenCommand = new RelayCommand(OpenQuoteRows);
@@ -56,6 +59,16 @@ namespace print_quotes_calculator.ViewModels
             {
                 _quoteRows = value;
                 RaisePropertyChanged(nameof(QuoteRows));
+            }
+        }
+
+        public IList SelectedRows
+        {
+            get => _selectedRows;
+            set
+            {
+                _selectedRows = value;
+                RaisePropertyChanged(nameof(SelectedRows));
             }
         }
 
@@ -112,6 +125,19 @@ namespace print_quotes_calculator.ViewModels
                 quoteId = _quoteRows.Last().Id + 1;
             }
             _quoteRows.Add(new QuoteRow(quoteId));
+        }
+
+
+        public ICommand RemoveCommand { get; }
+
+        public void RemoveSelectedQuoteRows()
+        {
+            // Cannot be foreach as when row gets removed the selection is updated in the DataGrid,
+            // modifying SelectedRows which stops iteration
+            while (SelectedRows.Count != 0)
+            {
+                QuoteRows.Remove((QuoteRow)SelectedRows[0]);
+            }
         }
 
 
