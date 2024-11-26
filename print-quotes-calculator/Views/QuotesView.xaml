@@ -71,6 +71,10 @@
             <StatusBarItem>
                 <TextBlock Text="{Binding TotalQuotesCost, StringFormat='Total Cost: £{0}'}"/>
             </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding SelectedRows.Count, StringFormat='Selected: {0}'}"/>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </UserControl>
