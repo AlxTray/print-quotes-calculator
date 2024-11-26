@@ -20,6 +20,7 @@ namespace print_quotes_calculator
             container.RegisterType<ICsvWrapper, CsvWrapper>();
             container.RegisterType<IQuotesViewModel, QuotesViewModel>();
             container.RegisterType<QuoteWindow>();
+            container.RegisterType<ISettingsDialogFactory, SettingsDialogFactory>();
             container.RegisterType<ISettingsViewModel, SettingsViewModel>();
             container.RegisterType<SettingsDialog>();
 

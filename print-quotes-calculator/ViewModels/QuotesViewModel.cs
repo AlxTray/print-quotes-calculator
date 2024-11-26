@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using print_quotes_calculator.Models;
 using print_quotes_calculator.Utilities;
-using print_quotes_calculator.Windows;
 
 namespace print_quotes_calculator.ViewModels
 {
@@ -16,20 +15,19 @@ namespace print_quotes_calculator.ViewModels
         private readonly IDatabaseHelper _db;
         private readonly IQuoteCalculator _quoteCalculator;
         private readonly ICsvWrapper _csvWrapper;
-        private readonly SettingsDialog _settingsDialog;
+        private readonly ISettingsDialogFactory _settingsDialogFactory;
         private ObservableCollection<QuoteRow> _quoteRows;
         private IList _selectedRows;
         private Dictionary<string, decimal> _materials;
         private Dictionary<string, decimal> _inks;
         private decimal _totalQuotesCost;
 
-        public QuotesViewModel(IDatabaseHelper db, IQuoteCalculator quoteCalculator, ICsvWrapper csvWrapper, SettingsDialog settingsDialog)
+        public QuotesViewModel(IDatabaseHelper db, IQuoteCalculator quoteCalculator, ICsvWrapper csvWrapper, ISettingsDialogFactory settingsDialogFactory)
         {
             _db = db;
             _quoteCalculator = quoteCalculator;
             _csvWrapper = csvWrapper;
-            // TODO: If settings is opened multiple time fails as same instance used
-            _settingsDialog = settingsDialog;
+            _settingsDialogFactory = settingsDialogFactory;
 
             _materials = _db.GetMaterials();
             _inks = _db.GetInks();
@@ -145,7 +143,7 @@ namespace print_quotes_calculator.ViewModels
 
         public void ShowSettingsDialog()
         {
-            _settingsDialog.ShowDialog();
+            _settingsDialogFactory.Create();
             MaterialTypes = _db.GetMaterials();
             InkTypes = _db.GetInks();
         }
