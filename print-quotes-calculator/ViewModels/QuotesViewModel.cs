@@ -208,7 +208,7 @@ namespace print_quotes_calculator.ViewModels
                     quoteRow.PropertyChanged += QuoteRow_PropertyChanged;
                     if (quoteRow.QuoteCost == 0) continue;
                     _db.AddOrUpdateQuoteRow(quoteRow);
-                    CalculateTotalCost();
+                    TotalQuotesCost += quoteRow.QuoteCost;
                 }
             }
 
@@ -218,7 +218,7 @@ namespace print_quotes_calculator.ViewModels
                 {
                     quoteRow.PropertyChanged -= QuoteRow_PropertyChanged;
                     _db.RemoveQuoteRow(quoteRow);
-                    CalculateTotalCost();
+                    TotalQuotesCost -= quoteRow.QuoteCost;
                 }
             }
         }
