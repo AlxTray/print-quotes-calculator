@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintQuotesCalculator", "PrintQuotesCalculator\PrintQuotesCalculator.csproj", "{BB92E7EF-D8D4-408E-8355-35830E68DFCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintQuotesCalculator.Test", "PrintQuotesCalculator.Test\PrintQuotesCalculator.Test.csproj", "{F5C88FA3-253D-47AA-9583-3892666D0B98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BB92E7EF-D8D4-408E-8355-35830E68DFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB92E7EF-D8D4-408E-8355-35830E68DFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB92E7EF-D8D4-408E-8355-35830E68DFCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C88FA3-253D-47AA-9583-3892666D0B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C88FA3-253D-47AA-9583-3892666D0B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C88FA3-253D-47AA-9583-3892666D0B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C88FA3-253D-47AA-9583-3892666D0B98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
