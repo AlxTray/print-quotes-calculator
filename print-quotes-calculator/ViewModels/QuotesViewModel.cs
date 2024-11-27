@@ -119,11 +119,11 @@ namespace print_quotes_calculator.ViewModels
         public void AddQuoteRow()
         {
             long quoteId = 1;
-            if (_quoteRows.Count > 0)
+            if (QuoteRows.Count > 0)
             {
-                quoteId = _quoteRows.Last().Id + 1;
+                quoteId = QuoteRows.Last().Id + 1;
             }
-            _quoteRows.Add(new QuoteRow(quoteId));
+            QuoteRows.Add(new QuoteRow(quoteId));
         }
 
 
