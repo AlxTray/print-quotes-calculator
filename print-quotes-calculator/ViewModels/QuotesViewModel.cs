@@ -33,12 +33,14 @@ namespace print_quotes_calculator.ViewModels
             _inks = _db.GetInks();
 
             _quoteRows = [];
+            // This does cause it calling the AddOrUpdateQuoteRow()
+            // function on each add but this will just update each row with the same values.
+            // CollectionChanged needs to be added before so each row gets the PropertyChanged event added
             _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
             foreach (QuoteRow row in db.GetQuoteRows())
             {
                 _quoteRows.Add(row);
             }
-            CalculateTotalCost();
 
             NewCommand = new RelayCommand(ClearQuoteRows);
             AddCommand = new RelayCommand(AddQuoteRow);
@@ -191,12 +193,6 @@ namespace print_quotes_calculator.ViewModels
         }
 
 
-        private void CalculateTotalCost()
-        {
-            TotalQuotesCost = _quoteRows.Sum(row => row.QuoteCost);
-        }
-
-
         public void QuoteRow_CollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
         {
             if (eventArgs.NewItems != null)
@@ -239,8 +235,11 @@ namespace print_quotes_calculator.ViewModels
                 quoteRow.QuoteCost = 0.00m;
                 return;
             }
+
+            var previousCost = quoteRow.QuoteCost;
             quoteRow.QuoteCost = _quoteCalculator.CalculateQuote(quoteRow.MaterialUsage, materialCost, quoteRow.InkUsage, inkCost);
-            CalculateTotalCost();
+            TotalQuotesCost -= previousCost;
+            TotalQuotesCost += quoteRow.QuoteCost;
 
             _db.AddOrUpdateQuoteRow(quoteRow);
         }
