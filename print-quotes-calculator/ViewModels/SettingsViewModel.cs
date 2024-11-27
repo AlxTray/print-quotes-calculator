@@ -219,6 +219,13 @@ namespace print_quotes_calculator.ViewModels
 
         public void ReadMaterialsOrInks()
         {
+            if (MaterialIsChecked == false && InkIsChecked == false)
+            {
+                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
             var openDialog = new OpenFileDialog
             {
                 Multiselect = false,
