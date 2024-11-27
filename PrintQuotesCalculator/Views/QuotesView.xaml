@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="PrintQuotesCalculator.Views.QuotesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:utilities="clr-namespace:PrintQuotesCalculator.Utilities"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Menu Background="GhostWhite">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Command="{Binding NewCommand}"/>
+                <Separator/>
+                <MenuItem Header="Open and Replace..." Command="{Binding OpenCommand}"/>
+                <MenuItem Header="Open and Append..." Command="{Binding AppendCommand}"/>
+                <MenuItem Header="Export to CSV..." Command="{Binding SaveCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Add Quote" Command="{Binding AddCommand}"/>
+                <MenuItem Header="Remove Selected" Command="{Binding RemoveCommand}"/>
+                <Separator/>
+                <MenuItem Header="Settings..." Command="{Binding ShowSettingsDialogCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"/>
+            </MenuItem>
+        </Menu>
+        <utilities:BindableSelectionDataGrid Margin="0,25,0,19" Background="Gainsboro" AlternatingRowBackground="Gainsboro" ItemsSource="{Binding QuoteRows}" SelectedItems="{Binding SelectedRows, Mode=OneWayToSource}" SelectionUnit="FullRow" AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn Header="Material" SelectedItemBinding="{Binding Material, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys, UpdateSourceTrigger=PropertyChanged,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.MaterialTypes.Keys, UpdateSourceTrigger=PropertyChanged,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTextColumn Header="Material Usage" Binding="{Binding MaterialUsage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridComboBoxColumn Header="Ink" SelectedItemBinding="{Binding Ink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys, UpdateSourceTrigger=PropertyChanged,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.InkTypes.Keys, UpdateSourceTrigger=PropertyChanged,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTextColumn Header="Ink Usage" Binding="{Binding InkUsage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Cost" Binding="{Binding QuoteCost, StringFormat='£{0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </utilities:BindableSelectionDataGrid>
+        <StatusBar VerticalAlignment="Bottom" Height="19" Background="DarkGray" FontSize="11">
+            <StatusBarItem>
+                <TextBlock Text="{Binding QuoteRows.Count, StringFormat='{}{0} Quotes'}"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding TotalQuotesCost, StringFormat='Total Cost: £{0}'}"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding SelectedRows.Count, StringFormat='Selected: {0}'}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</UserControl>
