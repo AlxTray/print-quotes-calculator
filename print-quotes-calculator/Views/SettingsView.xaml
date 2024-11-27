@@ -40,8 +40,8 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Key}" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Value}"/>
-                        <TextBlock Text="sqm"/>
+                        <TextBlock Text="| "/>
+                        <TextBlock Text="{Binding Value, StringFormat='£{0}psqm'}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
