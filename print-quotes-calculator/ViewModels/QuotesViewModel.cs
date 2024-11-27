@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -42,7 +43,7 @@ namespace print_quotes_calculator.ViewModels
                 _quoteRows.Add(row);
             }
 
-            NewCommand = new RelayCommand(ClearQuoteRows);
+            NewCommand = new RelayCommand(NewQuotesCheck);
             AddCommand = new RelayCommand(AddQuoteRow);
             RemoveCommand = new RelayCommand(RemoveSelectedQuoteRows);
             ShowSettingsDialogCommand = new RelayCommand(ShowSettingsDialog);
@@ -66,6 +67,14 @@ namespace print_quotes_calculator.ViewModels
             get => _selectedRows;
             set
             {
+                // When nothing is selected SelectedItems in BindableSelectionDataGrid is null,
+                // therefore initialise with default ArrayList when it is null to have a Count of 0 displayed when nothing is selected
+                // and does not explode when attempting to remove with nothing selected
+                if (value == null)
+                {
+                    _selectedRows = new ArrayList();
+                    return;
+                }
                 _selectedRows = value;
                 RaisePropertyChanged(nameof(SelectedRows));
             }
@@ -104,13 +113,47 @@ namespace print_quotes_calculator.ViewModels
 
         public ICommand NewCommand { get; }
 
+        public void NewQuotesCheck()
+        {
+            var result = MessageBox.Show("Are you sure you want to delete all quotes from local storage?",
+                "Remove quotes", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes) ClearQuoteRows();
+        }
+
+
+        public ICommand OpenCommand { get; }
+
+        public void OpenQuoteRows()
+        {
+            ClearQuoteRows();
+            AppendQuoteRows();
+        }
+
+
         public void ClearQuoteRows()
         {
-            // Remove each item one by one as .Clear() does not fire CollectionChanged property
+            // Remove each item one by one as .Clear() does not fire CollectionChanged event
             foreach (var row in QuoteRows.ToList())
             {
                 QuoteRows.Remove(row);
             }
+        }
+
+
+        public ICommand AppendCommand { get; }
+
+        public void AppendQuoteRows()
+        {
+            var openDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = "Select a Quotes CSV file",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = openDialog.ShowDialog();
+            if (result != true) return;
+            QuoteRows = _csvWrapper.ReadQuotes(openDialog.FileName, QuoteRows);
         }
 
 
@@ -131,6 +174,18 @@ namespace print_quotes_calculator.ViewModels
 
         public void RemoveSelectedQuoteRows()
         {
+            if (SelectedRows.Count == 0)
+            {
+                MessageBox.Show("No quotes have been selected to remove", "No quotes selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
+            var quotePluralString = (SelectedRows.Count == 1) ? "quote" : "quotes";
+            var result = MessageBox.Show($"Are you sure you want to delete {SelectedRows.Count} {quotePluralString} from local storage?",
+                "Remove quotes", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.No) return;
+
             // Cannot be foreach as when row gets removed the selection is updated in the DataGrid,
             // modifying SelectedRows which stops iteration
             while (SelectedRows.Count != 0)
@@ -164,32 +219,6 @@ namespace print_quotes_calculator.ViewModels
 
             var result = saveDialog.ShowDialog();
             if (result == true) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
-        }
-
-
-        public ICommand OpenCommand { get;  }
-
-        public void OpenQuoteRows()
-        {
-            ClearQuoteRows();
-            AppendQuoteRows();
-        }
-
-
-        public ICommand AppendCommand { get; }
-
-        public void AppendQuoteRows()
-        {
-            var openDialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Title = "Select a Quotes CSV file",
-                Filter = "CSV Files(*.csv)|*.csv"
-            };
-
-            var result = openDialog.ShowDialog();
-            if (result != true) return;
-            QuoteRows = _csvWrapper.ReadQuotes(openDialog.FileName, QuoteRows);
         }
 
 

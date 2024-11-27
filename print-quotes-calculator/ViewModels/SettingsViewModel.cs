@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using CsvHelper;
 using Microsoft.Win32;
 using print_quotes_calculator.Models;
 
@@ -106,10 +108,35 @@ namespace print_quotes_calculator.ViewModels
         }
 
 
+        private string GetTypeString()
+        {
+            return (MaterialIsChecked) ? "material" : "ink";
+        }
+
+
         public ICommand AddMaterialOrInkCommand { get; }
 
         public void AddMaterialOrInk()
         {
+            if (MaterialIsChecked == false && InkIsChecked == false)
+            {
+                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+            if (TextBoxName == null)
+            {
+                MessageBox.Show($"Insufficient details provided to add {GetTypeString()}", "Insufficient details", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+            if (TextBoxCost == 0)
+            {
+                var result = MessageBox.Show($"Cost for {TextBoxName} is zero. Are you sure?", "Insufficient details", MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+                if (result == MessageBoxResult.No) return;
+            }
+
             if (MaterialIsChecked)
             {
                 _databaseHelper.AddMaterial(TextBoxName, TextBoxCost);
@@ -127,6 +154,19 @@ namespace print_quotes_calculator.ViewModels
 
         public void RemoveMaterialOrInk()
         {
+            if (MaterialIsChecked == false && InkIsChecked == false)
+            {
+                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+            if (SelectedName == null)
+            {
+                MessageBox.Show($"Please select an existing {GetTypeString()} to remove", $"No {GetTypeString()} selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
             if (MaterialIsChecked)
             {
                 _databaseHelper.RemoveMaterial(SelectedName);
@@ -144,9 +184,19 @@ namespace print_quotes_calculator.ViewModels
 
         public void WriteMaterialsOrInks()
         {
+            if (MaterialIsChecked == false && InkIsChecked == false)
+            {
+                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
             var saveDialog = new SaveFileDialog
             {
-                FileName = "Quotes",
+                FileName = string.Concat(
+                    GetTypeString().AsSpan(0, 1).ToString().ToUpper(),
+                    GetTypeString().AsSpan(1),
+                    "s"),
                 DefaultExt = ".csv",
                 Filter = "CSV Files(*.csv)|*.csv"
             };
@@ -179,13 +229,21 @@ namespace print_quotes_calculator.ViewModels
             var result = openDialog.ShowDialog();
             if (result != true) return;
 
-            if (MaterialIsChecked)
+            try
             {
-                SelectedCollection = _csvWrapper.ReadMaterials(openDialog.FileName, SelectedCollection);
+                if (MaterialIsChecked)
+                {
+                    SelectedCollection = _csvWrapper.ReadMaterials(openDialog.FileName, SelectedCollection);
+                }
+                else
+                {
+                    SelectedCollection = _csvWrapper.ReadInks(openDialog.FileName, SelectedCollection);
+                }
             }
-            else
+            catch (HeaderValidationException e)
             {
-                SelectedCollection = _csvWrapper.ReadInks(openDialog.FileName, SelectedCollection);
+                MessageBox.Show("Invalid CSV file selected, please try another.", "Invalid CSV", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
             }
         }
 
