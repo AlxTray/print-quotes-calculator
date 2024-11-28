@@ -46,10 +46,11 @@ namespace PrintQuotesCalculator.ViewModels
             NewCommand = new RelayCommand(NewQuotesCheck);
             AddCommand = new RelayCommand(AddQuoteRow);
             RemoveCommand = new RelayCommand(RemoveSelectedQuoteRows);
-            ShowSettingsDialogCommand = new RelayCommand(ShowSettingsDialog);
+            SettingsCommand = new RelayCommand(ShowSettingsDialog);
             SaveCommand = new RelayCommand(SaveQuoteRows);
             OpenCommand = new RelayCommand(OpenQuoteRows);
             AppendCommand = new RelayCommand(AppendQuoteRows);
+            AboutCommand = new RelayCommand(ShowAboutMessage);
         }
 
         public ObservableCollection<QuoteRow> QuoteRows
@@ -196,7 +197,7 @@ namespace PrintQuotesCalculator.ViewModels
         }
 
 
-        public ICommand ShowSettingsDialogCommand { get; }
+        public ICommand SettingsCommand { get; }
 
         public void ShowSettingsDialog()
         {
@@ -219,6 +220,15 @@ namespace PrintQuotesCalculator.ViewModels
 
             var result = saveDialog.ShowDialog();
             if (result == true) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
+        }
+
+
+        public ICommand AboutCommand { get; }
+
+        public void ShowAboutMessage()
+        {
+            MessageBox.Show("This application was created by Alex Ashby (alex.ashby02@icloud.com). 2024.", "About",
+                MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 

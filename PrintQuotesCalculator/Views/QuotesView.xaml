@@ -19,10 +19,10 @@
                 <MenuItem Header="Add Quote" Command="{Binding AddCommand}"/>
                 <MenuItem Header="Remove Selected" Command="{Binding RemoveCommand}"/>
                 <Separator/>
-                <MenuItem Header="Settings..." Command="{Binding ShowSettingsDialogCommand}"/>
+                <MenuItem Header="Settings..." Command="{Binding SettingsCommand}"/>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About"/>
+                <MenuItem Header="About" Command="{Binding AboutCommand}"/>
             </MenuItem>
         </Menu>
         <utilities:BindableSelectionDataGrid Margin="0,25,0,19" Background="Gainsboro" AlternatingRowBackground="Gainsboro" ItemsSource="{Binding QuoteRows}" SelectedItems="{Binding SelectedRows, Mode=OneWayToSource}" SelectionUnit="FullRow" AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="False">
