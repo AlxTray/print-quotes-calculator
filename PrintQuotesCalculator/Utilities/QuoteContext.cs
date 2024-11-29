@@ -13,6 +13,9 @@ namespace PrintQuotesCalculator.Utilities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // Place the database file in current user's AppData/Roaming folder
+            // TODO: Maybe should have the database file just next to the EXE when running as debug
+            // TODO: Should have ability to install as all users and have it place the file in ProgramData
             var databaseFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Print Quotes Calculator");
             if (!Directory.Exists(databaseFilePath))
             {
