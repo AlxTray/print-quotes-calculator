@@ -15,6 +15,18 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_47CCC88015F74125A786C20B218012A7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6BC71608A242415C8C43911E91648E89"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C4102CA0A9154C4EB6042622FD5FF018"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -37,13 +49,21 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\PrintQuotesCalculator.Setup.msi"
+        "OutputFilename" = "8:Release\\Print Quotes Calculator.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -53,6 +73,32 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.8.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.8.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.8.1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.8.0.x64"
+                    {
+                    "Name" = "8:.NET Runtime 8.0.10 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.8.0.x64"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.8.0.x64"
+                    {
+                    "Name" = "8:.NET Desktop Runtime 8.0.10 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.8.0.x64"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -84,6 +130,46 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_47CCC88015F74125A786C20B218012A7"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\Downloads\\logo.ico"
+            "TargetName" = "8:logo.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_27A259626562458796FD97D1C2F0E518"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6BC71608A242415C8C43911E91648E89"
+            {
+            "SourcePath" = "8:..\\PrintQuotesCalculator\\bin\\Release\\net8.0-windows\\publish\\PrintQuotesCalculator.deps.json"
+            "TargetName" = "8:PrintQuotesCalculator.deps.json"
+            "Tag" = "8:"
+            "Folder" = "8:_27A259626562458796FD97D1C2F0E518"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -139,9 +225,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:PrintQuotesCalculator.Setup"
+        "ProductName" = "8:Print Quotes Calculator"
         "ProductCode" = "8:{8C26A7FD-4470-49C4-B790-61B9F10E8564}"
-        "PackageCode" = "8:{A5E79D56-531C-421C-9F69-69F98C3C52A3}"
+        "PackageCode" = "8:{4514BB37-AD5C-4ECD-9B80-5361C9289CE5}"
         "UpgradeCode" = "8:{A46B26C1-1FD8-4AFB-9EC4-DAA7C14E03FD}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -149,16 +235,16 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:alex.ashby02@icloud.com"
+        "Manufacturer" = "8:AlxTray"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:PrintQuotesCalculator.Setup"
+        "Title" = "8:Print Quotes Calculator"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:alex.ashby02@icloud.com"
+        "ARPCONTACT" = "8:AlxTray"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_47CCC88015F74125A786C20B218012A7"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -261,6 +347,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4C4FAB3B8CFA4C32BA5C59AEB976570E"
+            {
+            "Name" = "8:Print Quotes Calculator"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_C4102CA0A9154C4EB6042622FD5FF018"
+            "Folder" = "8:_5CBA840EC43843ADBF35357B80012A82"
+            "WorkingFolder" = "8:_27A259626562458796FD97D1C2F0E518"
+            "Icon" = "8:_47CCC88015F74125A786C20B218012A7"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F28534C593314C0EA86730032F930244"
+            {
+            "Name" = "8:Print Quotes Calculator"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_C4102CA0A9154C4EB6042622FD5FF018"
+            "Folder" = "8:_AE5E5F5707EB4E6D8254647B30FFFE66"
+            "WorkingFolder" = "8:_27A259626562458796FD97D1C2F0E518"
+            "Icon" = "8:_47CCC88015F74125A786C20B218012A7"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
