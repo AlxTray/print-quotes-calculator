@@ -11,11 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="5fjgp1nb.ayw~" />
-    <None Remove="Views\QuotesView.xaml~RF805370.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="logo.ico" />
   </ItemGroup>
 

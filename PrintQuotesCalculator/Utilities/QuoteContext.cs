@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 
 namespace PrintQuotesCalculator.Utilities
@@ -12,8 +13,13 @@ namespace PrintQuotesCalculator.Utilities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var databaseFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Print Quotes Calculator");
+            if (!Directory.Exists(databaseFilePath))
+            {
+                Directory.CreateDirectory(databaseFilePath);
+            }
             optionsBuilder.UseSqlite(
-                "Data Source=local_storage.db");
+                $"Data Source={Path.Combine(databaseFilePath, "local_storage.db")}");
         }
     }
 
