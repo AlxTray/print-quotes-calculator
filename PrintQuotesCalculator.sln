@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintQuotesCalculator", "Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintQuotesCalculator.Test", "PrintQuotesCalculator.Test\PrintQuotesCalculator.Test.csproj", "{F5C88FA3-253D-47AA-9583-3892666D0B98}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "PrintQuotesCalculator.Packaging", "PrintQuotesCalculator.Packaging\PrintQuotesCalculator.Packaging.wapproj", "{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,36 +61,6 @@ Global
 		{F5C88FA3-253D-47AA-9583-3892666D0B98}.Release|x64.Build.0 = Release|Any CPU
 		{F5C88FA3-253D-47AA-9583-3892666D0B98}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5C88FA3-253D-47AA-9583-3892666D0B98}.Release|x86.Build.0 = Release|Any CPU
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|ARM.ActiveCfg = Debug|ARM
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|ARM.Build.0 = Debug|ARM
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|ARM.Deploy.0 = Debug|ARM
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|ARM64.Build.0 = Debug|ARM64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|x64.ActiveCfg = Debug|x64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|x64.Build.0 = Debug|x64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|x64.Deploy.0 = Debug|x64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|x86.ActiveCfg = Debug|x86
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|x86.Build.0 = Debug|x86
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Debug|x86.Deploy.0 = Debug|x86
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|ARM.ActiveCfg = Release|ARM
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|ARM.Build.0 = Release|ARM
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|ARM.Deploy.0 = Release|ARM
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|ARM64.ActiveCfg = Release|ARM64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|ARM64.Build.0 = Release|ARM64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|ARM64.Deploy.0 = Release|ARM64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|x64.ActiveCfg = Release|x64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|x64.Build.0 = Release|x64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|x64.Deploy.0 = Release|x64
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|x86.ActiveCfg = Release|x86
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|x86.Build.0 = Release|x86
-		{DACD8439-9E04-4278-9BB9-0A9CF30DFD3A}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
