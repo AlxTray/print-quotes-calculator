@@ -15,9 +15,9 @@ namespace PrintQuotesCalculator.ViewModels
         private string _textBoxName;
         private decimal _textBoxCost;
         private string _selectedName;
-        private Dictionary<string, decimal> _materials;
-        private Dictionary<string, decimal> _inks;
-        private Dictionary<string, decimal> _selectedCollection;
+        private IDictionary<string, decimal> _materials;
+        private IDictionary<string, decimal> _inks;
+        private IDictionary<string, decimal> _selectedCollection;
         private bool _materialIsChecked;
         private bool _inkIsChecked;
 
@@ -65,7 +65,7 @@ namespace PrintQuotesCalculator.ViewModels
             }
         }
 
-        public Dictionary<string, decimal> SelectedCollection
+        public IDictionary<string, decimal> SelectedCollection
         {
             get => _selectedCollection;
             set

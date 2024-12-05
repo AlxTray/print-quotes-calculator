@@ -9,8 +9,8 @@ namespace PrintQuotesCalculator.ViewModels
     internal interface IQuotesViewModel
     {
         ObservableCollection<QuoteRow> QuoteRows { get; set; }
-        Dictionary<string, decimal> MaterialTypes { get; set; }
-        Dictionary<string, decimal> InkTypes { get; set; }
+        IDictionary<string, decimal> MaterialTypes { get; set; }
+        IDictionary<string, decimal> InkTypes { get; set; }
         ICommand AddCommand { get; }
         void AddQuoteRow();
         ICommand SaveCommand { get; }

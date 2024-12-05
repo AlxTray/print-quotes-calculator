@@ -35,7 +35,7 @@ namespace PrintQuotesCalculator.Models
             csv.WriteRecords(quoteRows);
         }
 
-        public Dictionary<string, decimal> ReadMaterials(string csvPath, Dictionary<string, decimal> materials)
+        public Dictionary<string, decimal> ReadMaterials(string csvPath, IDictionary<string, decimal> materials)
         {
             using var reader = new StreamReader(csvPath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
@@ -50,7 +50,7 @@ namespace PrintQuotesCalculator.Models
             return materials.ToDictionary();
         }
 
-        public void WriteMaterials(string csvPath, Dictionary<string, decimal> materials)
+        public void WriteMaterials(string csvPath, IDictionary<string, decimal> materials)
         {
             using var writer = new StreamWriter(csvPath);
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
@@ -59,7 +59,7 @@ namespace PrintQuotesCalculator.Models
             csv.WriteRecords(materials);
         }
 
-        public Dictionary<string, decimal> ReadInks(string csvPath, Dictionary<string, decimal> inks)
+        public Dictionary<string, decimal> ReadInks(string csvPath, IDictionary<string, decimal> inks)
         {
             using var reader = new StreamReader(csvPath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
@@ -74,7 +74,7 @@ namespace PrintQuotesCalculator.Models
             return inks.ToDictionary();
         }
 
-        public void WriteInks(string csvPath, Dictionary<string, decimal> inks)
+        public void WriteInks(string csvPath, IDictionary<string, decimal> inks)
         {
             using var writer = new StreamWriter(csvPath);
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);

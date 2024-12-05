@@ -19,8 +19,8 @@ namespace PrintQuotesCalculator.ViewModels
         private readonly ISettingsDialogFactory _settingsDialogFactory;
         private ObservableCollection<QuoteRow> _quoteRows;
         private IList _selectedRows;
-        private Dictionary<string, decimal> _materials;
-        private Dictionary<string, decimal> _inks;
+        private IDictionary<string, decimal> _materials;
+        private IDictionary<string, decimal> _inks;
         private decimal _totalQuotesCost;
 
         public QuotesViewModel(IDatabaseHelper db, IQuoteCalculator quoteCalculator, ICsvWrapper csvWrapper, ISettingsDialogFactory settingsDialogFactory)
@@ -81,7 +81,7 @@ namespace PrintQuotesCalculator.ViewModels
             }
         }
 
-        public Dictionary<string, decimal> MaterialTypes
+        public IDictionary<string, decimal> MaterialTypes
         {
             get => _materials;
             set
@@ -91,7 +91,7 @@ namespace PrintQuotesCalculator.ViewModels
             }
         }
 
-        public Dictionary<string, decimal> InkTypes
+        public IDictionary<string, decimal> InkTypes
         {
             get => _inks;
             set
