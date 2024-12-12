@@ -227,7 +227,7 @@ namespace PrintQuotesCalculator.ViewModels
 
         public void ShowAboutMessage()
         {
-            MessageBox.Show("This application was created by Alex Ashby (alex.ashby02@icloud.com). 2024.", "About",
+            MessageBox.Show("This application was created by Alex Ashby (alex.ashby02@icloud.com). 2024.\n\n Version: 1.0.0", "About",
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
