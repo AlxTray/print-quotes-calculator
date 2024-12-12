@@ -29,7 +29,7 @@ ArchitecturesAllowed=x64compatible
 ; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
-OutputBaseFilename=pqcsetup-1.0.0
+OutputBaseFilename=pqcsetup
 SetupIconFile={#AppLocalFolder}\logo.ico
 Compression=lzma
 SolidCompression=yes
