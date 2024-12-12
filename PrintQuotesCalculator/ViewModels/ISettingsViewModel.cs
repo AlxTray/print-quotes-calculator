@@ -7,7 +7,7 @@ namespace PrintQuotesCalculator.ViewModels
         string TextBoxName { get; set; }
         decimal TextBoxCost { get; set; }
         string SelectedName { get; set; }
-        Dictionary<string, decimal> SelectedCollection { get; set; }
+        IDictionary<string, decimal> SelectedCollection { get; set; }
         bool MaterialIsChecked { get; set; }
         bool InkIsChecked { get; set; }
         ICommand AddMaterialOrInkCommand { get; }
