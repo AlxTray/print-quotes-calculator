@@ -33,9 +33,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          token: ${{ secrets.RELEASE_TOKEN }}
           files: ./PrintQuotesCalculator.Deploy/Output/pqcsetup.exe
-          tag_name: v${{ steps.test.package_version.version }}
-          name: v${{ steps.test.package_version.version }}
+          tag_name: v${{ steps.package_version.version }}
+          name: v${{ steps.package_version.version }}
           generate_release_notes: true
           make_latest: true
           
