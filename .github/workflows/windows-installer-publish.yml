@@ -34,7 +34,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
-          files: ./PrintQuotesCalculator.Deploy/Output/pqcsetup.exe
+          files: ./PrintQuotesCalculator.Deploy/Output/pqcsetup-${{ steps.package_version.outputs.version }}.exe
           tag_name: v${{ steps.package_version.outputs.version }}
           name: v${{ steps.package_version.outputs.version }}
           generate_release_notes: true
