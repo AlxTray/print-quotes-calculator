@@ -2,7 +2,6 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Print Quotes Calculator"
-#define MyAppVersion "1.0.0"
 #define MyAppPublisher "AlxTray"
 #define MyAppURL "https://github.com/AlxTray/print-quotes-calculator"
 #define MyAppExeName "PrintQuotesCalculator.exe"
@@ -29,7 +28,7 @@ ArchitecturesAllowed=x64compatible
 ; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
-OutputBaseFilename=pqcsetup
+OutputBaseFilename=pqcsetup-{#MyAppVersion}
 SetupIconFile={#AppLocalFolder}\logo.ico
 Compression=lzma
 SolidCompression=yes

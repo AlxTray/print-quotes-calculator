@@ -22,7 +22,7 @@ jobs:
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: ./PrintQuotesCalculator.Deploy/InstallerSetupScript.iss
-          options: /O+
+          options: /DMyAppVersion=${{ steps.package_version.outputs.version }}
 
       - name: Get Version
         id: package_version
@@ -35,8 +35,8 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
           files: ./PrintQuotesCalculator.Deploy/Output/pqcsetup.exe
-          tag_name: v${{ steps.package_version.version }}
-          name: v${{ steps.package_version.version }}
+          tag_name: v${{ steps.package_version.outputs.version }}
+          name: v${{ steps.package_version.outputs.version }}
           generate_release_notes: true
           make_latest: true
           
