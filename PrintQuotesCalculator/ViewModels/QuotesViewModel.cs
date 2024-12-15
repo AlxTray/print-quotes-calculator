@@ -34,14 +34,13 @@ namespace PrintQuotesCalculator.ViewModels
             _inks = _db.GetInks();
 
             _quoteRows = [];
-            // This does cause it calling the AddOrUpdateQuoteRow()
-            // function on each add but this will just update each row with the same values.
-            // CollectionChanged needs to be added before so each row gets the PropertyChanged event added
-            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
             foreach (QuoteRow row in db.GetQuoteRows())
             {
                 _quoteRows.Add(row);
+                row.PropertyChanged += QuoteRow_PropertyChanged;
             }
+            // Add collection changed after so that it is not called for each of these for no reason
+            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
 
             NewCommand = new RelayCommand(NewQuotesCheck);
             AddCommand = new RelayCommand(AddQuoteRow);
