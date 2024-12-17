@@ -8,10 +8,10 @@ namespace PrintQuotesCalculator.Models
         void AddOrUpdateQuoteRow(QuoteRow quoteRow);
         void RemoveQuoteRow(QuoteRow quoteRow);
         Dictionary<string, decimal> GetMaterials();
-        void AddMaterial(string material, decimal cost);
-        void RemoveMaterial(string material);
+        void AddMaterial(string name, decimal cost);
+        void RemoveMaterial(string name);
         Dictionary<string, decimal> GetInks();
-        void AddInk(string ink, decimal cost);
-        void RemoveInk(string ink);
+        void AddInk(string name, decimal cost);
+        void RemoveInk(string name);
     }
 }
