@@ -34,14 +34,13 @@ namespace PrintQuotesCalculator.ViewModels
             _inks = _db.GetInks();
 
             _quoteRows = [];
-            // This does cause it calling the AddOrUpdateQuoteRow()
-            // function on each add but this will just update each row with the same values.
-            // CollectionChanged needs to be added before so each row gets the PropertyChanged event added
-            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
             foreach (QuoteRow row in db.GetQuoteRows())
             {
                 _quoteRows.Add(row);
+                row.PropertyChanged += QuoteRow_PropertyChanged;
             }
+            // Add collection changed after so that it is not called for each of these for no reason
+            _quoteRows.CollectionChanged += QuoteRow_CollectionChanged;
 
             NewCommand = new RelayCommand(NewQuotesCheck);
             AddCommand = new RelayCommand(AddQuoteRow);
@@ -153,7 +152,7 @@ namespace PrintQuotesCalculator.ViewModels
             };
 
             var result = openDialog.ShowDialog();
-            if (result != true) return;
+            if (!result.HasValue || !result.Value) return;
             QuoteRows = _csvWrapper.ReadQuotes(openDialog.FileName, QuoteRows);
         }
 
@@ -165,7 +164,7 @@ namespace PrintQuotesCalculator.ViewModels
             long quoteId = 1;
             if (QuoteRows.Count > 0)
             {
-                quoteId = QuoteRows.Last().Id + 1;
+                quoteId = QuoteRows[^1].Id + 1;
             }
             QuoteRows.Add(new QuoteRow(quoteId));
         }
@@ -219,13 +218,13 @@ namespace PrintQuotesCalculator.ViewModels
             };
 
             var result = saveDialog.ShowDialog();
-            if (result == true) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
+            if (result.HasValue && result.Value) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
         }
 
 
         public ICommand AboutCommand { get; }
 
-        public void ShowAboutMessage()
+        public static void ShowAboutMessage()
         {
             MessageBox.Show("This application was created by Alex Ashby (alex.ashby02@icloud.com). 2024.\n\n Version: 1.0.0", "About",
                 MessageBoxButton.OK, MessageBoxImage.Information);
