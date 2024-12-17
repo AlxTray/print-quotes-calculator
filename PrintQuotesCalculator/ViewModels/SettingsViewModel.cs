@@ -118,7 +118,7 @@ namespace PrintQuotesCalculator.ViewModels
 
         public void AddMaterialOrInk()
         {
-            if (MaterialIsChecked == false && InkIsChecked == false)
+            if (!MaterialIsChecked && !InkIsChecked)
             {
                 MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
                     MessageBoxImage.Stop);
@@ -154,7 +154,7 @@ namespace PrintQuotesCalculator.ViewModels
 
         public void RemoveMaterialOrInk()
         {
-            if (MaterialIsChecked == false && InkIsChecked == false)
+            if (!MaterialIsChecked && !InkIsChecked)
             {
                 MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
                     MessageBoxImage.Stop);
@@ -184,7 +184,7 @@ namespace PrintQuotesCalculator.ViewModels
 
         public void WriteMaterialsOrInks()
         {
-            if (MaterialIsChecked == false && InkIsChecked == false)
+            if (!MaterialIsChecked && !InkIsChecked)
             {
                 MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
                     MessageBoxImage.Stop);
@@ -202,7 +202,7 @@ namespace PrintQuotesCalculator.ViewModels
             };
 
             var result = saveDialog.ShowDialog();
-            if (result != true) return;
+            if (!result.HasValue || !result.Value) return;
 
             if (MaterialIsChecked)
             {
@@ -234,7 +234,7 @@ namespace PrintQuotesCalculator.ViewModels
             };
 
             var result = openDialog.ShowDialog();
-            if (result != true) return;
+            if (!result.HasValue || !result.Value) return;
 
             try
             {

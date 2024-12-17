@@ -152,7 +152,7 @@ namespace PrintQuotesCalculator.ViewModels
             };
 
             var result = openDialog.ShowDialog();
-            if (result != true) return;
+            if (!result.HasValue || !result.Value) return;
             QuoteRows = _csvWrapper.ReadQuotes(openDialog.FileName, QuoteRows);
         }
 
@@ -218,7 +218,7 @@ namespace PrintQuotesCalculator.ViewModels
             };
 
             var result = saveDialog.ShowDialog();
-            if (result == true) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
+            if (result.HasValue && result.Value) _csvWrapper.WriteQuotes(saveDialog.FileName, QuoteRows);
         }
 
 
