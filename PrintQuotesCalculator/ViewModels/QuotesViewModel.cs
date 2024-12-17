@@ -224,7 +224,7 @@ namespace PrintQuotesCalculator.ViewModels
 
         public ICommand AboutCommand { get; }
 
-        public void ShowAboutMessage()
+        public static void ShowAboutMessage()
         {
             MessageBox.Show("This application was created by Alex Ashby (alex.ashby02@icloud.com). 2024.\n\n Version: 1.0.0", "About",
                 MessageBoxButton.OK, MessageBoxImage.Information);
