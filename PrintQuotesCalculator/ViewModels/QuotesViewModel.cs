@@ -164,7 +164,7 @@ namespace PrintQuotesCalculator.ViewModels
             long quoteId = 1;
             if (QuoteRows.Count > 0)
             {
-                quoteId = QuoteRows.Last().Id + 1;
+                quoteId = QuoteRows[^1].Id + 1;
             }
             QuoteRows.Add(new QuoteRow(quoteId));
         }
