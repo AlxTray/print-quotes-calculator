@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="500">
-    <TabControl>
+             mc:Ignorable="d">
+    <TabControl Height="200" Width="500">
         <TabItem Header="Materials">
             <Canvas Margin="10">
                 <TextBox TextWrapping="Wrap" Text="Name" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>

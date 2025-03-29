@@ -11,6 +11,6 @@
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight">
     <Grid>
-        <views:SettingsView x:Name="SettingsView" Margin="0,-16,0,0" />
+        <views:SettingsView x:Name="SettingsView"/>
     </Grid>
 </Window>
