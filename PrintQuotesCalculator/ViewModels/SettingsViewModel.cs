@@ -138,6 +138,8 @@ namespace PrintQuotesCalculator.ViewModels
 
             _databaseHelper.AddInk(InkName, InkCost);
             Inks = _databaseHelper.GetInks();
+            InkName = string.Empty;
+            InkCost = 0;
         }
 
         public ICommand AddMaterialCommand { get; }
@@ -158,6 +160,8 @@ namespace PrintQuotesCalculator.ViewModels
 
             _databaseHelper.AddMaterial(MaterialName, MaterialCost);
             Materials = _databaseHelper.GetMaterials();
+            MaterialName = string.Empty;
+            MaterialCost = 0;
         }
 
         public ICommand RemoveInkCommand { get; }
