@@ -34,87 +34,12 @@ namespace PrintQuotesCalculator.ViewModels
             AddMaterialCommand = new RelayCommand(AddMaterial);
             RemoveInkCommand = new RelayCommand(RemoveInk);
             RemoveMaterialCommand = new RelayCommand(RemoveMaterial);
-            WriteMaterialsOrInksCommand = new RelayCommand(WriteMaterialsOrInks);
-            ReadMaterialsOrInksCommand = new RelayCommand(ReadMaterialsOrInks);
+            WriteInksCommand = new RelayCommand(WriteInks);
+            WriteMaterialsCommand = new RelayCommand(WriteMaterials);
+            ReadInksCommand = new RelayCommand(ReadInks);
+            ReadMaterialsCommand = new RelayCommand(ReadMaterials);
         }
-
-
-        public ICommand WriteMaterialsOrInksCommand { get; }
-
-        public void WriteMaterialsOrInks()
-        {
-            if (!MaterialIsChecked && !InkIsChecked)
-            {
-                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-                return;
-            }
-
-            var saveDialog = new SaveFileDialog
-            {
-                FileName = string.Concat(
-                    GetTypeString().AsSpan(0, 1).ToString().ToUpper(),
-                    GetTypeString().AsSpan(1),
-                    "s"),
-                DefaultExt = ".csv",
-                Filter = "CSV Files(*.csv)|*.csv"
-            };
-
-            var result = saveDialog.ShowDialog();
-            if (!result.HasValue || !result.Value) return;
-
-            if (MaterialIsChecked)
-            {
-                _csvWrapper.WriteMaterials(saveDialog.FileName, SelectedCollection);
-            }
-            else
-            {
-                _csvWrapper.WriteInks(saveDialog.FileName, SelectedCollection);
-            }
-        }
-
-
-        public ICommand ReadMaterialsOrInksCommand { get; }
-
-        public void ReadMaterialsOrInks()
-        {
-            if (MaterialIsChecked == false && InkIsChecked == false)
-            {
-                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-                return;
-            }
-
-            var openDialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Title = "Select a Quotes CSV file",
-                Filter = "CSV Files(*.csv)|*.csv"
-            };
-
-            var result = openDialog.ShowDialog();
-            if (!result.HasValue || !result.Value) return;
-
-            try
-            {
-                if (MaterialIsChecked)
-                {
-                    SelectedCollection = _csvWrapper.ReadMaterials(openDialog.FileName, SelectedCollection);
-                }
-                else
-                {
-                    SelectedCollection = _csvWrapper.ReadInks(openDialog.FileName, SelectedCollection);
-                }
-            }
-            catch (HeaderValidationException e)
-            {
-                MessageBox.Show("Invalid CSV file selected, please try another.", "Invalid CSV", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-            }
-        }
-
-
-
+        
         public string InkName
         {
             get => _inkName;
@@ -195,7 +120,6 @@ namespace PrintQuotesCalculator.ViewModels
             }
         }
 
-
         public ICommand AddInkCommand { get; }
         public void AddInk()
         {
@@ -262,6 +186,87 @@ namespace PrintQuotesCalculator.ViewModels
 
             _databaseHelper.RemoveMaterial(SelectedInk);
             Inks = _databaseHelper.GetMaterials();
+        }
+
+
+        public ICommand WriteInksCommand { get; }
+        public void WriteInks()
+        {
+            var saveDialog = new SaveFileDialog
+            {
+                FileName = "inks",
+                DefaultExt = ".csv",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = saveDialog.ShowDialog();
+            if (!result.HasValue || !result.Value) return;
+
+            _csvWrapper.WriteInks(saveDialog.FileName, Inks);
+        }
+
+        public ICommand WriteMaterialsCommand { get; }
+        public void WriteMaterials()
+        {
+            var saveDialog = new SaveFileDialog
+            {
+                FileName = "materials",
+                DefaultExt = ".csv",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = saveDialog.ShowDialog();
+            if (!result.HasValue || !result.Value) return;
+
+            _csvWrapper.WriteMaterials(saveDialog.FileName, Materials);
+        }
+
+        public ICommand ReadInksCommand { get; }
+        public void ReadInks()
+        {
+            var openDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = "Select an inks CSV file",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = openDialog.ShowDialog();
+            if (!result.HasValue || !result.Value) return;
+
+            try
+            {
+                Inks = _csvWrapper.ReadInks(openDialog.FileName, Inks);
+            }
+            catch (HeaderValidationException e)
+            {
+                MessageBox.Show("Invalid CSV file selected, please try another.", "Invalid CSV", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+            }
+        }
+
+        public ICommand ReadMaterialsCommand { get; }
+        public void ReadMaterials()
+        {
+            var openDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = "Select a materials CSV file",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = openDialog.ShowDialog();
+            if (!result.HasValue || !result.Value) return;
+
+            try
+            {
+                Materials = _csvWrapper.ReadMaterials(openDialog.FileName, Materials);
+            }
+            catch (HeaderValidationException e)
+            {
+                MessageBox.Show("Invalid CSV file selected, please try another.", "Invalid CSV", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+            }
         }
 
 
