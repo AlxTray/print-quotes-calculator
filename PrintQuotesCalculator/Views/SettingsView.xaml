@@ -7,24 +7,44 @@
     <TabControl Height="200" Width="500">
         <TabItem Header="Materials">
             <Canvas Margin="10">
-                <TextBox TextWrapping="Wrap" Text="Name" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
-                <TextBox TextWrapping="Wrap" Text="Cost" Width="120" Canvas.Top="45" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
-                <Button Content="Add" Width="120" HorizontalAlignment="Center" Canvas.Top="90" VerticalAlignment="Top"/>
-                <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="152" HorizontalAlignment="Center" VerticalAlignment="Center" Width="322" Height="85"/>
-                <Button Content="Remove" Width="322" Canvas.Left="152" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                <Button Content="Export" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
-                <Button Content="Import" Canvas.Left="63" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding MaterialName}" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding MaterialCost}" Width="120" Canvas.Top="45" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
+                <Button Content="Add" Command="{Binding AddMaterialCommand}" Width="120" HorizontalAlignment="Center" Canvas.Top="90" VerticalAlignment="Top"/>
+                <ListBox Canvas.Left="152" HorizontalAlignment="Center" VerticalAlignment="Center" Width="322" Height="85" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding Materials, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedMaterial}" SelectedValuePath="Key">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <TextBlock Text="{Binding Key}" Margin="0,0,5,0"/>
+                                <TextBlock Text="| "/>
+                                <TextBlock Text="{Binding Value, StringFormat='£{0}psqm'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Content="Remove" Command="{Binding RemoveMaterialCommand}" Width="322" Canvas.Left="152" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button Content="Export" Command="{Binding WriteMaterialsCommand}" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
+                <Button Content="Import" Command="{Binding ReadMaterialsCommand}" Canvas.Left="63" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
             </Canvas>
         </TabItem>
         <TabItem Header="Inks">
             <Canvas Margin="10">
-                <TextBox TextWrapping="Wrap" Text="Name" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
-                <TextBox TextWrapping="Wrap" Text="Cost" Width="120" Canvas.Top="45" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
-                <Button Content="Add" Width="120" HorizontalAlignment="Center" Canvas.Top="90" VerticalAlignment="Top"/>
-                <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="152" HorizontalAlignment="Center" VerticalAlignment="Center" Width="322" Height="85"/>
-                <Button Content="Remove" Width="322" Canvas.Left="152" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                <Button Content="Export" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
-                <Button Content="Import" Canvas.Left="63" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding InkName}" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding InkCost}" Width="120" Canvas.Top="45" HorizontalAlignment="Center" VerticalAlignment="Top" Height="40"/>
+                <Button Content="Add" Command="{Binding AddInkCommand}" Width="120" HorizontalAlignment="Center" Canvas.Top="90" VerticalAlignment="Top"/>
+                <ListBox Canvas.Left="152" HorizontalAlignment="Center" VerticalAlignment="Center" Width="322" Height="85" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding Inks, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedInk}" SelectedValuePath="Key">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <TextBlock Text="{Binding Key}" Margin="0,0,5,0"/>
+                                <TextBlock Text="| "/>
+                                <TextBlock Text="{Binding Value, StringFormat='£{0}psqm'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Content="Remove" Command="{Binding RemoveInkCommand}" Width="322" Canvas.Left="152" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button Content="Export" Command="{Binding WriteInksCommand}" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
+                <Button Content="Import" Command="{Binding WriteMaterialsCommand}" Canvas.Left="63" Canvas.Top="132" HorizontalAlignment="Left" VerticalAlignment="Center" Width="57"/>
             </Canvas>
         </TabItem>
     </TabControl>
