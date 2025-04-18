@@ -187,8 +187,8 @@ namespace PrintQuotesCalculator.ViewModels
                 return;
             }
 
-            _databaseHelper.RemoveMaterial(SelectedInk);
-            Inks = _databaseHelper.GetMaterials();
+            _databaseHelper.RemoveMaterial(SelectedMaterial);
+            Materials = _databaseHelper.GetMaterials();
         }
 
 
