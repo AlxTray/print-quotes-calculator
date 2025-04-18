@@ -12,14 +12,14 @@ namespace PrintQuotesCalculator.ViewModels
     {
         private readonly IDatabaseHelper _databaseHelper;
         private readonly ICsvWrapper _csvWrapper;
-        private string _textBoxName;
-        private decimal _textBoxCost;
-        private string _selectedName;
+        private string _inkName;
+        private decimal _inkCost;
+        private string _materialName;
+        private decimal _materialCost;
+        private string _selectedInk;
+        private string _selectedMaterial;
         private IDictionary<string, decimal> _materials;
         private IDictionary<string, decimal> _inks;
-        private IDictionary<string, decimal> _selectedCollection;
-        private bool _materialIsChecked;
-        private bool _inkIsChecked;
 
         public SettingsViewModel(IDatabaseHelper databaseHelper, ICsvWrapper csvWrapper)
         {
@@ -29,223 +29,241 @@ namespace PrintQuotesCalculator.ViewModels
             _materials = _databaseHelper.GetMaterials();
             _inks = _databaseHelper.GetInks();
 
-            AddMaterialOrInkCommand = new RelayCommand(AddMaterialOrInk);
-            RemoveMaterialOrInkCommand = new RelayCommand(RemoveMaterialOrInk);
-            WriteMaterialsOrInksCommand = new RelayCommand(WriteMaterialsOrInks);
-            ReadMaterialsOrInksCommand = new RelayCommand(ReadMaterialsOrInks);
+            AddInkCommand = new RelayCommand(AddInk);
+            AddMaterialCommand = new RelayCommand(AddMaterial);
+            RemoveInkCommand = new RelayCommand(RemoveInk);
+            RemoveMaterialCommand = new RelayCommand(RemoveMaterial);
+            WriteInksCommand = new RelayCommand(WriteInks);
+            WriteMaterialsCommand = new RelayCommand(WriteMaterials);
+            ReadInksCommand = new RelayCommand(ReadInks);
+            ReadMaterialsCommand = new RelayCommand(ReadMaterials);
         }
-
-        public string TextBoxName
+        
+        public string InkName
         {
-            get => _textBoxName;
+            get => _inkName;
             set
             {
-                _textBoxName = value;
-                RaisePropertyChanged(nameof(TextBoxName));
+                _inkName = value;
+                RaisePropertyChanged(nameof(InkName));
             }
         }
 
-        public decimal TextBoxCost
+        public decimal InkCost
         {
-            get => _textBoxCost;
+            get => _inkCost;
             set
             {
-                _textBoxCost = value;
-                RaisePropertyChanged(nameof(TextBoxCost));
+                _inkCost = value;
+                RaisePropertyChanged(nameof(InkCost));
             }
         }
 
-        public string SelectedName
+        public string MaterialName
         {
-            get => _selectedName;
+            get => _materialName;
             set
             {
-                _selectedName = value;
-                RaisePropertyChanged(nameof(SelectedName));
+                _materialName = value;
+                RaisePropertyChanged(nameof(MaterialName));
             }
         }
 
-        public IDictionary<string, decimal> SelectedCollection
+        public decimal MaterialCost
         {
-            get => _selectedCollection;
+            get => _materialCost;
             set
             {
-                _selectedCollection = value;
-                if (MaterialIsChecked)
-                {
-                    _materials = value;
-                }
-                else
-                {
-                    _inks = value;
-                }
-                RaisePropertyChanged(nameof(SelectedCollection));
+                _materialCost = value;
+                RaisePropertyChanged(nameof(MaterialCost));
             }
         }
 
-        public bool MaterialIsChecked
+        public string SelectedInk
         {
-            get => _materialIsChecked;
+            get => _selectedInk;
             set
             {
-                _materialIsChecked = value;
-                _inkIsChecked = !value;
-                if (value) SelectedCollection = _materials;
-                RaisePropertyChanged(nameof(MaterialIsChecked));
+                _selectedInk = value;
+                RaisePropertyChanged(nameof(SelectedInk));
             }
         }
 
-        public bool InkIsChecked
+        public string SelectedMaterial
         {
-            get => _inkIsChecked;
+            get => _selectedMaterial;
             set
             {
-                _inkIsChecked = value;
-                _materialIsChecked = !value;
-                if (value) SelectedCollection = _inks;
-                RaisePropertyChanged(nameof(InkIsChecked));
+                _selectedMaterial = value;
+                RaisePropertyChanged(nameof(SelectedMaterial));
             }
         }
 
-
-        private string GetTypeString()
+        public IDictionary<string, decimal> Inks
         {
-            return (MaterialIsChecked) ? "material" : "ink";
+            get => _inks;
+            set
+            {
+                _inks = value;
+                RaisePropertyChanged(nameof(Inks));
+            }
         }
 
-
-        public ICommand AddMaterialOrInkCommand { get; }
-
-        public void AddMaterialOrInk()
+        public IDictionary<string, decimal> Materials
         {
-            if (MaterialIsChecked == false && InkIsChecked == false)
+            get => _materials;
+            set
             {
-                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
+                _materials = value;
+                RaisePropertyChanged(nameof(Materials));
+            }
+        }
+
+        public ICommand AddInkCommand { get; }
+        public void AddInk()
+        {
+            if (InkName == string.Empty)
+            {
+                MessageBox.Show("Insufficient details provided to add new ink", "Insufficient details", MessageBoxButton.OK,
                     MessageBoxImage.Stop);
                 return;
             }
-            if (TextBoxName == null)
+            if (InkCost == 0)
             {
-                MessageBox.Show($"Insufficient details provided to add {GetTypeString()}", "Insufficient details", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-                return;
-            }
-            if (TextBoxCost == 0)
-            {
-                var result = MessageBox.Show($"Cost for {TextBoxName} is zero. Are you sure?", "Insufficient details", MessageBoxButton.YesNo,
+                var result = MessageBox.Show("Cost for new ink is zero. Are you sure?", "Insufficient details", MessageBoxButton.YesNo,
                     MessageBoxImage.Warning);
                 if (result == MessageBoxResult.No) return;
             }
 
-            if (MaterialIsChecked)
+            _databaseHelper.AddInk(InkName, InkCost);
+            Inks = _databaseHelper.GetInks();
+            InkName = string.Empty;
+            InkCost = 0;
+        }
+
+        public ICommand AddMaterialCommand { get; }
+        public void AddMaterial()
+        {
+            if (MaterialName == string.Empty)
             {
-                _databaseHelper.AddMaterial(TextBoxName, TextBoxCost);
-                SelectedCollection = _databaseHelper.GetMaterials();
+                MessageBox.Show("Insufficient details provided to add new material", "Insufficient details", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
             }
-            else
+            if (MaterialCost == 0)
             {
-                _databaseHelper.AddInk(TextBoxName, TextBoxCost);
-                SelectedCollection = _databaseHelper.GetInks();
+                var result = MessageBox.Show("Cost for new material is zero. Are you sure?", "Insufficient details", MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+                if (result == MessageBoxResult.No) return;
             }
+
+            _databaseHelper.AddMaterial(MaterialName, MaterialCost);
+            Materials = _databaseHelper.GetMaterials();
+            MaterialName = string.Empty;
+            MaterialCost = 0;
+        }
+
+        public ICommand RemoveInkCommand { get; }
+        public void RemoveInk()
+        {
+            if (SelectedInk == string.Empty)
+            {
+                MessageBox.Show("Please select an existing ink to remove", $"No ink selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
+            _databaseHelper.RemoveInk(SelectedInk);
+            Inks = _databaseHelper.GetInks();
+        }
+
+        public ICommand RemoveMaterialCommand { get; }
+        public void RemoveMaterial()
+        {
+            if (SelectedMaterial == string.Empty)
+            {
+                MessageBox.Show("Please select an existing material to remove", $"No material selected", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+                return;
+            }
+
+            _databaseHelper.RemoveMaterial(SelectedMaterial);
+            Materials = _databaseHelper.GetMaterials();
         }
 
 
-        public ICommand RemoveMaterialOrInkCommand { get; }
-
-        public void RemoveMaterialOrInk()
+        public ICommand WriteInksCommand { get; }
+        public void WriteInks()
         {
-            if (MaterialIsChecked == false && InkIsChecked == false)
-            {
-                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-                return;
-            }
-            if (SelectedName == null)
-            {
-                MessageBox.Show($"Please select an existing {GetTypeString()} to remove", $"No {GetTypeString()} selected", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-                return;
-            }
-
-            if (MaterialIsChecked)
-            {
-                _databaseHelper.RemoveMaterial(SelectedName);
-                SelectedCollection = _databaseHelper.GetMaterials();
-            }
-            else
-            {
-                _databaseHelper.RemoveInk(SelectedName);
-                SelectedCollection = _databaseHelper.GetInks();
-            }
-        }
-
-
-        public ICommand WriteMaterialsOrInksCommand { get; }
-
-        public void WriteMaterialsOrInks()
-        {
-            if (MaterialIsChecked == false && InkIsChecked == false)
-            {
-                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-                return;
-            }
-
             var saveDialog = new SaveFileDialog
             {
-                FileName = string.Concat(
-                    GetTypeString().AsSpan(0, 1).ToString().ToUpper(),
-                    GetTypeString().AsSpan(1),
-                    "s"),
+                FileName = "inks",
                 DefaultExt = ".csv",
                 Filter = "CSV Files(*.csv)|*.csv"
             };
 
             var result = saveDialog.ShowDialog();
-            if (result != true) return;
+            if (!result.HasValue || !result.Value) return;
 
-            if (MaterialIsChecked)
-            {
-                _csvWrapper.WriteMaterials(saveDialog.FileName, SelectedCollection);
-            }
-            else
-            {
-                _csvWrapper.WriteInks(saveDialog.FileName, SelectedCollection);
-            }
+            _csvWrapper.WriteInks(saveDialog.FileName, Inks);
         }
 
-
-        public ICommand ReadMaterialsOrInksCommand { get; }
-
-        public void ReadMaterialsOrInks()
+        public ICommand WriteMaterialsCommand { get; }
+        public void WriteMaterials()
         {
-            if (MaterialIsChecked == false && InkIsChecked == false)
+            var saveDialog = new SaveFileDialog
             {
-                MessageBox.Show("Please select either Materials or Inks before proceeding", "No type selected", MessageBoxButton.OK,
-                    MessageBoxImage.Stop);
-                return;
-            }
+                FileName = "materials",
+                DefaultExt = ".csv",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
 
+            var result = saveDialog.ShowDialog();
+            if (!result.HasValue || !result.Value) return;
+
+            _csvWrapper.WriteMaterials(saveDialog.FileName, Materials);
+        }
+
+        public ICommand ReadInksCommand { get; }
+        public void ReadInks()
+        {
             var openDialog = new OpenFileDialog
             {
                 Multiselect = false,
-                Title = "Select a Quotes CSV file",
+                Title = "Select an inks CSV file",
                 Filter = "CSV Files(*.csv)|*.csv"
             };
 
             var result = openDialog.ShowDialog();
-            if (result != true) return;
+            if (!result.HasValue || !result.Value) return;
 
             try
             {
-                if (MaterialIsChecked)
-                {
-                    SelectedCollection = _csvWrapper.ReadMaterials(openDialog.FileName, SelectedCollection);
-                }
-                else
-                {
-                    SelectedCollection = _csvWrapper.ReadInks(openDialog.FileName, SelectedCollection);
-                }
+                Inks = _csvWrapper.ReadInks(openDialog.FileName, Inks);
+            }
+            catch (HeaderValidationException e)
+            {
+                MessageBox.Show("Invalid CSV file selected, please try another.", "Invalid CSV", MessageBoxButton.OK,
+                    MessageBoxImage.Stop);
+            }
+        }
+
+        public ICommand ReadMaterialsCommand { get; }
+        public void ReadMaterials()
+        {
+            var openDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = "Select a materials CSV file",
+                Filter = "CSV Files(*.csv)|*.csv"
+            };
+
+            var result = openDialog.ShowDialog();
+            if (!result.HasValue || !result.Value) return;
+
+            try
+            {
+                Materials = _csvWrapper.ReadMaterials(openDialog.FileName, Materials);
             }
             catch (HeaderValidationException e)
             {
